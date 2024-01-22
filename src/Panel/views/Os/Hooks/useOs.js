@@ -2,7 +2,7 @@ import  useSWR  from 'swr'
 import clienteAxios from '../../../../Config/axios';
 
 export const useOs = () => {
-    const Bearer = "13|D8HS62kExNpOxieHnSsAIbTnv983kNT3Uoo9Kjwp6eb9268c";
+    const Bearer = localStorage.getItem('token')
 
     const {data:indexOS,isLoading,mutate} = useSWR('/api/indexos',()=>
     clienteAxios('/api/indexos',{

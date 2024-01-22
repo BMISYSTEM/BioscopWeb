@@ -24,16 +24,15 @@ export const Os = () => {
     }
   return (
     <OsContextProvider>
-      <section className="w-full h-full bg-white rounded-xl flex flex-col gap-1 ">
+      <section className="w-full md:h-full h-[90vh] bg-white rounded-xl flex flex-col gap-1 overflow-hidden ">
         {/* filtros y acciones  */}
         <AccionesOs />
         {/* lista de os */}
-        <div className="w-full h-[80%]  flex flex-col p-2 items-center overflow-auto ">
+        <div className="w-full md:h-[80%] h-screen  flex flex-col gap-2 p-2 items-center overflow-auto  ">
             {indexOS?.map((os) => (
             <OsRow key={os.id} os={os} />
             ))}
         </div>
-       
       </section>
       <OsModales />
     </OsContextProvider>

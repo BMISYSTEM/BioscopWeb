@@ -15,12 +15,12 @@ const Navar = () => {
     setLoginModal(!loginModal);
   };
   return (
-    <nav className="w-full h-16 flex flex-row gap-3 justify-between items-center p-5  ">
+    <nav className="w-full h-16 md:flex flex-row gap-3 justify-between items-center md:p-5 hidden ">
       {/* Logo */}
-      <div className="w-1/3">
+      <div className="w-1/3 md:flex hidden">
         <img src={logo} alt="" className=" w-40 " />
       </div>
-      <div className="flex flex-row w-full  gap-5 justify-between text-sm  font-bold text-slate-900 items-center p-2 border-2 border-slate-200 rounded-xl shadow-lg">
+      <div className="flex md:flex-row w-full  gap-5 justify-between text-sm  font-bold text-slate-900 items-center p-2 border-2 border-slate-200 rounded-xl shadow-lg">
         <NavLink
           className={`hover:text-indigo-500 flex flex-row gap-1 items-center hover:scale-110`}
           to={"/"}

@@ -15,6 +15,7 @@ import 'animate.css';
  * Imagenes
  */
 import imagen from '../assets/header.png'
+import NavarMobile from '../component/NavarMobile';
 const Home = () => {
   const {loginModal} = useContext(HomeContext)
   console.log(loginModal)
@@ -22,8 +23,10 @@ const Home = () => {
       <>
         <body className='w-full h-full scroll overflow-hidden '>
             {/* cabecera */}
-            <head className='flex flex-col'>
+            <head className='flex flex-col '>
+                {/* Los navar estan condiccionados por css para que en pantallas pequeñas aparezca el navarMobile  */}
                 <Navar/>
+                <NavarMobile/>
                 <div className=''>
                     <img src={imagen} alt="" className='w-full h-[700px]'/>
                 </div>

@@ -5,7 +5,7 @@ import { OsContext } from "../Context/OsContext";
 
 export const useApuntamientos = () => {
     const {ApunteOSModalId} = useContext(OsContext)
-    const Bearer = "13|D8HS62kExNpOxieHnSsAIbTnv983kNT3Uoo9Kjwp6eb9268c";
+    const Bearer = localStorage.getItem('token')
 
     // create 
     const createApuntamiento = async(data,setEstatus) => {
@@ -50,19 +50,9 @@ export const useApuntamientos = () => {
             setEstatus(error)
         }
     }
-    // // index
-    // const indexApuntamientoOS = async(os_id,setEstatus) =>{
-    //     try {
-    //         const estatus = await clienteAxios('/api/indexapuntamientoos?id='+os_id,{
-    //          headers:{
-    //              Authorization:`Bearer ${Bearer}`
-    //          }
-    //         })  
-    //         await setEstatus(estatus)   
-    //      } catch (error) {
-    //          setEstatus(error)
-    //      }
-    // }
+    /**
+     * Index consulta las notas de la os seleccionada
+     */
     const {data,isLoading,error,mutate} = useSWR('/api/indexapuntamientoos?id='+ApunteOSModalId,()=>
         clienteAxios.get('/api/indexapuntamientoos?id='+ApunteOSModalId,{
             headers:{

@@ -13,7 +13,7 @@ export const OsModales = () => {
       <Modal
         isOpen={newOsModal}
         className={
-          "bg-slate-800/40 backdrop-blur-sm w-full h-screen grid place-items-center  "
+          "bg-slate-800/40 backdrop-blur-sm w-full h-screen grid place-items-center "
         }
       >
         <NewOs />

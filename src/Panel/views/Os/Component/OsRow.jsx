@@ -6,12 +6,10 @@ import { Tooltip } from "../../../component/Tooltip";
 import { OsContext } from "../Context/OsContext";
 export const OsRow = ({ os }) => {
   const {handleClickUpdate,handleClickApunteOs} = useContext(OsContext)
+  console.log(os.color)
   return (
-    <div className=" w-full overflow-hidden" >
-        {/* <div class="tooltiptext">¡Hola!</div> */}
-      {/* os y su descripcion */}
-      <div className="w-full  h-[5rem]  bg-white  shadow-sm flex flex-row gap-2 items-center p-2 justify-between border-b-2 hover:border-indigo-600 ">
-        
+
+      <div className="w-full  md:h-auto   bg-white  shadow-sm flex flex-row md:gap-2 gap-4 items-start p-2 justify-between border-b-2 hover:border-indigo-600 ">
         <h1>
           <span className="text-xl font-bold text-slate-600 flex flex-col gap-1">
             Codigo:
@@ -31,10 +29,17 @@ export const OsRow = ({ os }) => {
           {os.consultor}
         </h3>
         <h3>
-          <span className="text-xl font-bold text-slate-600 flex flex-col gap-1">
+          <span className="text-xl font-bold text-slate-600 flex flex-col gap-1 ">
             Estado:
+            <span className={`border-2 p-2 text-sm rounded-xl `} style={{
+              borderColor:os.color,
+              backgroundColor:os.color,
+              color: "white",
+              boxShadow:'5px 5px 10px '+os.color
+            }}>
+              {os.estado}
+            </span>
           </span>
-          {os.estado}
         </h3>
         <div className="flex flex-row gap-3 mr-5">
           <button className="w-6 h-6 hover:scale-110 transition ease-linear duration-200"
@@ -49,6 +54,5 @@ export const OsRow = ({ os }) => {
           </button>
         </div>
       </div>
-    </div>
   );
 };

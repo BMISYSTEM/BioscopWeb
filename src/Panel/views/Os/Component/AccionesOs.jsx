@@ -26,9 +26,9 @@ export const AccionesOs = () => {
   }
   
   return (
-    <div className="w-full h-20 border-b-2 flex flex-row items-center p-2 gap-4">
+    <div className="w-full md:h-20 border-b-2 flex md:flex-row flex-col items-center p-2 gap-4">
       {/* busqueda */}
-      <div className="w-[35%] h-10 border-2 rounded-xl shadow-xl relative ">
+      <div className="md:w-[35%] w-full h-10 border-2 rounded-xl shadow-xl relative ">
         <div className="absolute w-[10%]  flex items-center justify-start p-2">
           <img src={lupa} alt="" title="Busqueda" className="w-6 h-6   " />
         </div>
@@ -46,7 +46,7 @@ export const AccionesOs = () => {
       </button>
       <select
           type="text"
-          className="block w-1/3 rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+          className="block md:w-1/3 w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             // value={cliente}
             // onChange={(e)=>setCliente(e.target.value)}
         >
@@ -57,7 +57,7 @@ export const AccionesOs = () => {
       </select>
       <select
           type="text"
-          className="block w-1/3 rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+          className="block md:w-1/3 w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             // value={cliente}
             // onChange={(e)=>setCliente(e.target.value)}
         >
@@ -68,7 +68,7 @@ export const AccionesOs = () => {
       </select>
       <select
           type="text"
-          className="block w-1/3 rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+          className="block md:w-1/3 w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
             // value={cliente}
             // onChange={(e)=>setCliente(e.target.value)}
         >

@@ -81,7 +81,7 @@ export const UpdateOs = () => {
       setUser(osUpdateselect[0].user_id)
     },[])
   return (
-    <section className="w-1/4 h-2/3 bg-white rounded-xl shadow-xl border-2 p-2 flex flex-col  overflow-hidden animate__animated animate__fadeInDown">
+    <section className="md:w-1/4 w-full h-2/3 bg-white rounded-xl shadow-xl border-2 p-2 flex flex-col  overflow-hidden animate__animated animate__fadeInDown">
       {/* titulo y opcion de cerrar */}
       <div className="w-full flex justify-between">
         <p className="text-sm font-bold text-slate-400">UpdateOs</p>

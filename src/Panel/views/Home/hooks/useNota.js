@@ -2,10 +2,12 @@ import  useSWR  from 'swr'
 import clienteAxios from "../../../../Config/axios";
 import { useContext } from 'react';
 import { HomePanelContext } from '../Context/HomePanelContext';
+import { useResumen } from './useResumen';
 
 export const useNota = () => {
+  const {notasMutate} = useResumen();
   const {fechaNota} = useContext(HomePanelContext)
-  const Bearer = "13|D8HS62kExNpOxieHnSsAIbTnv983kNT3Uoo9Kjwp6eb9268c";
+  const Bearer = localStorage.getItem('token')
   /**
    *  Crea una nueva nota
    * @param {*} data 
@@ -27,6 +29,7 @@ export const useNota = () => {
       });
       setEstatus(estatus.data.succes);
       await mutate();
+      await notasMutate();
     } catch (error) {
         setErrortext(error.response.data.errors.text);
         setErrorData(error.response.data.errors.data);

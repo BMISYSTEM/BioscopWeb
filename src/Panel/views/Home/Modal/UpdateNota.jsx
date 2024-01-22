@@ -48,7 +48,7 @@ export const UpdateNota = () => {
   },[])
   return (
     <>
-    <section className="bg-white w-1/3 h-auto rounded-xl shadow-xl border-2 border-indigo-300 p-2 animate__animated animate__fadeInDown">
+    <section className="bg-white md:w-1/3 w-full  md:h-auto h-2/3 rounded-xl shadow-xl border-2 border-indigo-300 p-2 animate__animated animate__fadeInDown">
       <div className="w-full flex justify-between">
         <p className="text-sm font-bold text-slate-400">UpdateNota</p>
         <button

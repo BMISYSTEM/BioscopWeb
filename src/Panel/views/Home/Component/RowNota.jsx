@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
+import { HomePanelContext } from '../Context/HomePanelContext';
+import { useNota } from '../hooks/useNota';
 /**
  * Imagenes
  */
 import borrar from "../Assets/borrar.svg";
 import editar from "../Assets/editar.svg";
-import { HomePanelContext } from '../Context/HomePanelContext';
-import { useNota } from '../hooks/useNota';
+import completo from "../Assets/completo.svg"
+import { Tooltip } from '../../../component/Tooltip';
 
 export const RowNota = ({text,data,id}) => {
   const {verMensaje,SetVerMensaje,modalUpdateNota,setmodalUpdateNota,idUpdateNota,setidUpdateNota} = useContext(HomePanelContext);
@@ -55,20 +57,14 @@ export const RowNota = ({text,data,id}) => {
         </div>
       <div className="flex flex-row gap-4">
         <button className="flex flex-row gap-2 hover:scale-110" onClick={()=>handleDeleteNota(id)}>
-          <img
-            src={borrar}
-            alt="Borrar nota"
-            title="Eliminar nota"
-            className="w-6 h-6"
-          />
+          <Tooltip img={borrar} mensaje={'Borrar'} key={1}/>
         </button>
         <button className="flex flex-row gap-2 hover:scale-110" onClick={()=>handleUpdateNota(id)}>
-          <img
-            src={editar}
-            alt="Editar nota"
-            title="Editar nota"
-            className="w-6 h-6"
-          />
+          <Tooltip img={editar} mensaje={'Editar'} key={2}/>
+        </button>
+        
+        <button className="flex flex-row gap-2 hover:scale-110" onClick={()=>handleUpdateNota(id)}>
+          <Tooltip img={completo} mensaje={'Realizado'} key={3}/>
         </button>
       </div>
       </button>

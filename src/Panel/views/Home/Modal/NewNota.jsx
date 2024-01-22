@@ -17,6 +17,8 @@ export const NewNota = () => {
   // datos del formulario
   const [descripcion, setDescripcion] = useState("");
   const [data, setData] = useState("");
+  const [reunion, setReunion] = useState(0);
+  const [apuntamiento, setapuntamiento] = useState(0);
   /**
    * Reqliza la petision HTTP post al backend para crear una nueva nota
    */
@@ -26,6 +28,8 @@ export const NewNota = () => {
     const datos = {
       text: descripcion,
       data: data,
+      reunion:reunion ? 1 : 0,
+      apuntamiento: apuntamiento ? 1 : 0 
     };
     await newNota(datos, setEstatus, setErrorText, setErrorData);
   };
@@ -50,10 +54,9 @@ export const NewNota = () => {
     toast.warning(errorData[0]);
     setErrorData(null);
   }
-
   return (
     <>
-      <section className="bg-white w-1/3 h-auto rounded-xl shadow-xl border-2 border-indigo-300 p-2  overflow-hidden animate__animated animate__fadeInDown">
+      <section className="bg-white md:w-1/3 w-full md:h-auto h-2/3 rounded-xl shadow-xl border-2 border-indigo-300 p-2  overflow-hidden animate__animated animate__fadeInDown">
         <div className="w-full flex justify-between">
           <p className="text-sm font-bold text-slate-400">NewModal</p>
           <button
@@ -98,6 +101,29 @@ export const NewNota = () => {
             value={data}
             className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
+          <div className=" w-full flex flex-row gap-2 justify-center items-center">
+            <label htmlFor="">Hora inicio</label>
+            <input type="time" 
+            className="  rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+            <label htmlFor="">Hora fin</label>
+            <input type="time" 
+            className="  rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            
+            />
+          </div>
+          {/* funcionalidades */}
+          {/* Generar apuntamiento una vez completa */}
+          <div className="w-full flex flex-row gap-2">
+            <label htmlFor="">Genera apuntamiento?</label>
+            <input type="checkbox" name="Genera apuntamiento" id="1" value={apuntamiento} onChange={(e)=>setapuntamiento(e.target.checked)}/>
+          </div>
+          {/* Es Reunion */}
+          <div className="w-full flex flex-row gap-2">
+            <label htmlFor="">Reunion?</label>
+            <input type="checkbox" name="Genera apuntamiento" id="1" value={reunion} onChange={(e)=>setReunion(e.target.checked)}/>
+          </div>
+
           <input
             type="submit"
             value={"Guardar"}

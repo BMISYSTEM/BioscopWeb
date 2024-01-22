@@ -21,7 +21,7 @@ export const Notas = () => {
   };
 
   return (
-    <section className="w-full  flex flex-col gap-2 rounded-xl border-2 scroll overflow-auto p-2 items-start justify-start">
+    <section className="w-full h-full  flex flex-col gap-2 rounded-xl border-2 scroll overflow-auto p-2 items-start justify-start">
       <div className="w-full h-20 ">
         <button
           className="p-2 hover:scale-105 shadow-lg  transition flex flex-row gap-2 rounded-xl border-2"

@@ -6,10 +6,16 @@ import Permisos from "./Panel/views/Permisos";
 import SharePoint from "./Panel/views/SharePoint";
 import HomePanel from "./Panel/views/Home/Pages/HomePanel";
 import  Os  from "./Panel/views/Os/Pages/Os";
+import { Documentacion } from "./Panel/views/Documentacion/Pages/Documentacion";
+import { Project } from "./Panel/views/Project/views/Project";
 const router = createBrowserRouter([
     {
         path: "/",
         element: <MainHome />,
+    },
+    {
+        path:"/documentacion",
+        element: <Documentacion/>
     },
     {
         path: "/panel",
@@ -18,6 +24,10 @@ const router = createBrowserRouter([
             {
                 path:"/panel/home",
                 element: <HomePanel/>
+            },
+            {
+                path:"/panel/project",
+                element: <Project/>
             },
             {
                 path:"/panel/os",
@@ -30,7 +40,12 @@ const router = createBrowserRouter([
             {
                 path:"/panel/permiso",
                 element: <Permisos/>
+            },
+            {
+                path:"/panel/docs",
+                element: <Documentacion/>
             }
+          
         ]
     },
     {

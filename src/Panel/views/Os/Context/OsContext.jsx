@@ -22,6 +22,11 @@ export const OsContextProvider = ({children}) => {
      */
     const [ApunteOSModal,setApunteOSModal] = useState(false)
     const [ApunteOSModalId,setApunteOSModalId] = useState(0)
+    /**
+     * Asigna los daros para editar 
+     */
+    const [editData,setEditData] = useState(null);
+
 
     const handleClickApunteOs = (id) =>{
       setApunteOSModalId(id);
@@ -35,7 +40,8 @@ export const OsContextProvider = ({children}) => {
     <Provider value={{
         newOsModal,setnewOsModal,
         updateOs,setUpdateOs,handleClickUpdate,idUpdate,
-        ApunteOSModal,setApunteOSModal,handleClickApunteOs,ApunteOSModalId,setApunteOSModalId
+        ApunteOSModal,setApunteOSModal,handleClickApunteOs,ApunteOSModalId,setApunteOSModalId,
+        editData,setEditData
     }}>
         {children}
     </Provider>

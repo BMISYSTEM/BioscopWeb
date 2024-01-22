@@ -1,20 +1,49 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { HomeContext } from "../context/HomeContext";
 import cerrar from "../assets/cerrar.svg";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import clienteAxios from "../../Config/axios";
+import { useLogin } from "../Hooks/useLogin";
 const ModalLogin = () => {
   const navigate = useNavigate()
   const { setLoginModal, loginModal } = useContext(HomeContext);
+  const {login} = useLogin('guest','/panel/home');
+  const [estatus,setEstatus] = useState(null)
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+
   const send = async (e) =>
   {
     // logeo y guardo token en el localstorague 
     e.preventDefault();
+    const data = {
+      'email':email,
+      'password':password
+    }
+    login(data,setEstatus);
     toast.success('Iniciando seccion',{position:toast.POSITION.TOP_CENTER});
-    navigate('/panel');
+    // navigate();
+  }
+  if(estatus?.data?.succes){
+    toast.success(estatus?.data?.succes)
+    setEstatus(null)
+    localStorage.setItem('token',estatus.data.token)
+  }
+  if(estatus?.response?.data?.errors)
+  {
+    const errors = estatus?.response?.data?.errors;
+    
+    errors.email.map(error=>(
+      toast.warning(error)
+    ))
+    errors.password.map(error=>(
+      toast.warning(error)
+    ))
+    setEstatus(null)
   }
   return (
-    <section className="w-1/3 h-2/3 bg-white rounded-xl shadow-xl border-2 shadow-green-500 flex flex-col p-2">
+    <section className="md:w-1/3 w-full h-2/3 bg-white rounded-xl shadow-xl border-2 shadow-green-500 flex flex-col p-2">
       <div className="w-full  flex flex-row justify-end p-1">
         <button onClick={() => setLoginModal(!loginModal)}>
           <img
@@ -33,6 +62,8 @@ const ModalLogin = () => {
           Nombre Usuario
         </label>
         <input
+          onChange={(e)=>setEmail(e.target.value)}
+          value={estatus}
           type="text"
           className="p-2 border-2 rounded-xl text-center text-sm font-bold "
           placeholder="Correo electrónico"
@@ -41,6 +72,8 @@ const ModalLogin = () => {
           Contraseña
         </label>
         <input
+          onChange={(e)=>setPassword(e.target.value)}
+          value={password}
           type="password"
           className="p-2 border-2 rounded-xl text-center text-sm font-bold "
           placeholder="Contraseña"

@@ -54,6 +54,10 @@ export const NewOs = () => {
       position: "top-center",
       autoClose: 600,
     });
+    setdescripcion('');
+    setCliente('')
+    setEstado('')
+    setUser('')
     setEstatus(null);
   }
   if (estatus?.response?.data?.errors) {
@@ -76,7 +80,7 @@ export const NewOs = () => {
     setEstatus(null);
   }
   return (
-    <section className="w-1/4 h-2/3 bg-white rounded-xl shadow-xl border-2 p-2 flex flex-col animate__animated animate__fadeInDown">
+    <section className="md:w-1/4 w-full h-2/3 bg-white rounded-xl shadow-xl border-2 p-2 flex flex-col animate__animated animate__fadeInDown">
       {/* titulo y opcion de cerrar */}
       <div className="w-full flex justify-between">
         <p className="text-sm font-bold text-slate-400">NewOs</p>

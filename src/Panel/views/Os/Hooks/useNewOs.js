@@ -5,7 +5,7 @@ import { useOs } from "./useOs";
 
 
 export const useNewOs = () => {
-    const Bearer = "13|D8HS62kExNpOxieHnSsAIbTnv983kNT3Uoo9Kjwp6eb9268c";
+    const Bearer = localStorage.getItem('token')
     const {mutate} = useOs();
 
     

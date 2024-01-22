@@ -87,7 +87,7 @@ const Calendario = () => {
         setFechaNota(ano+'0'+ (mes+1) + ''+ (dia > 9 ? dia : '0'+dia))
     },[])
   return (
-    <div className='w-96 h-auto flex flex-col p-2  rounded-xl'>
+    <div className='md:w-96 w-full h-auto flex flex-col p-2  rounded-xl'>
         <div className='w-full h-10 flex flex-row justify-between border-2 rounded-xl p1 items-center cursor-pointer'>
             <div className={`${dia === 0 ? " bg-sky-700 text-white rounded-full " : "text-slate-600"} hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Lu</div>
             <div className={`${dia === 1 ? " bg-sky-700 text-white rounded-full " : "text-slate-600"} hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Ma</div>

@@ -74,7 +74,7 @@ const Calendario = () => {
                 semanasinco.push(...[0]);
             }
         }
-        
+  
     }
     const [diasCalendario,setDiasCalendario] = useState([semanauno,semanados,semanatres,semanacuatro,semanasinco]);
     const seleccionfecha = (dia) =>{
@@ -99,7 +99,7 @@ const Calendario = () => {
         </div>
         {diasCalendario.map(diasCalendario => (
             <div className='w-full h-10 flex flex-row justify-between p1 items-center '>
-                <button onClick={()=>seleccionfecha(diasCalendario[0] )} className={`${diaseleccion === diasCalendario[0] ? 'bg-sky-600/60 text-white font-bold ' : "text-sm font-bold text-slate-600   border-r-2 hover:bg-slate-600/60 cursor-pointer   hover:scale-110 transition hover:text-white"} p-1 w-full rounded-full text-center`}>
+                <button onClick={()=>seleccionfecha(diasCalendario[0] )} className={`${diaseleccion === diasCalendario[0] ? 'bg-sky-600/60 text-white font-bold ' : "text-sm font-bold text-slate-600   border-r-2 hover:bg-slate-600/60 cursor-pointer   hover:scale-110 transition  hover:text-white"} p-1 w-full rounded-full text-center`}>
                     {diasCalendario[0]}
                 </button>
                 <button onClick={()=>seleccionfecha(diasCalendario[1] )} className={`${diaseleccion === diasCalendario[1] ? 'bg-sky-600/60 text-white font-bold ' : "text-sm font-bold text-slate-600   border-r-2 hover:bg-slate-600/60 cursor-pointer   hover:scale-110 transition hover:text-white"} p-1 w-full rounded-full text-center`}>

@@ -30,7 +30,6 @@ export const useGantt = () => {
     const [diaFin, setDiaFin] = useState(fechafin?.getDate());
     const [mesFin, setMesFin] = useState(fechafin?.getMonth());
 
-
     /**
      * visibilidad de tooltip, se muestra cuando se pasa por encima de una tarea
      */

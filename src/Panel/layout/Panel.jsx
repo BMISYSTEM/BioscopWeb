@@ -9,70 +9,32 @@ import 'animate.css'
 import usuario from "../assets/usuario.svg";
 import expandir from "../assets/expandir.svg"
 import encoger from "../assets/encoger.svg"
-import permisos from "../assets/permisos.svg"
-import compartido from "../assets/compartido.svg"
-import ruta from "../assets/ruta.svg"
-import docs from "../assets/docs.svg"
+
 import alarma from "../assets/alarma.svg"
 import mensajes from "../assets/mensajes.svg"
 import relog from "../assets/relog.svg"
-import casa from "../assets/casa.svg";
-import os from "../assets/os.svg";
-import project from "../assets/project.svg";
 
 
-const navar= [
-  {
-    id:1,
-    title: "Home",
-    to: "/panel/home",
-    icono: casa,
-  },
-  {
-    id:2,
-    title: "Project",
-    to: "/panel/project",
-    icono: project,
-  },
-  {
-    id:3,
-    title: "OS",
-    to: "/panel/os",
-    icono: os,
-  },
-  {
-    id:4,
-    title: "Permisos",
-    to: "/panel/permiso",
-    icono: permisos,
-  },
-  {
-    id:5,
-    title: "Sharepoint",
-    to: "/panel/sharepoint",
-    icono: compartido,
-  },
-  {
-    id:6,
-    title: "Intinerario",
-    to: "/panel/intinerario",
-    icono: ruta,
-  },
-  {
-    id:7,
-    title: "Docs",
-    to: "/panel/docs",
-    icono: docs,
-  },
-];
+/**
+ * Imporacion de array con opciones de menu
+ */
+import { useOptionsNav } from '../Hooks/useOptionsNav';
+import { Tooltip } from '../component/Tooltip';
+
 const Panel = () => {
     /**
      * Al estar consultando la variable user se obliga que se revalide que el usuario esta logueado y que su personal
      * asses token siga vigente
      */
+    
     const {user} = useLogin();
     const [barra,setbarra] = useState(false)
     const [selectOption,setselectOption] = useState(1)
+    const [selectOptionSubMenu,setselectOptionSubMenu] = useState(1)
+    /**
+     * Informacion de los botones de navegacion
+     */
+    const {navar} = useOptionsNav()
   return (
     <div className="w-full h-screen flex md:flex-row flex-col overflow-hidden">
       {/* navegacion */}
@@ -103,20 +65,67 @@ const Panel = () => {
         </div>
         {/* si la barra es true se coloca en formato flex sino desaparece */}
         <div className={` ${barra ? " flex " : " hidden md:flex"} flex-col gap-2`}>
-          {navar.map((nav) => (
-            <Link
-              onClick={()=>setselectOption(nav.id)}
-              to={nav.to}
-              className={`w-full p-2 flex flex-row ${!barra ? ' justify-center ': ' ' } ${selectOption === nav.id ? " scale-105 bg-[#edf8ff] border border-[#48b9ff] hover:scale-105 rounded-xl " : " rounded-xl text-[#0d439b] hover:bg-[#edf8ff] hover:border hover:border-[#48b9ff]"} gap-2 items-center transition   `}
-            >
-              <img src={nav.icono} alt={nav.title} className="w-6 h-6" />
-              {barra ?  
-                  <span className="text-xl font-bold  ">{nav.title}</span>
-              : 
-                  ''
-              }
-            </Link>
-          ))}
+          {navar.map((nav,index) => {
+            
+            if (nav.children.length > 0 ) {
+              return (
+                <button key={index}
+                  onClick={()=>setselectOption(nav.id)}
+                  className={`w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOption === nav.id ? "  border-[0.1px] border-[#48b9ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
+                >
+                  <div className='flex flex-col gap-2'>
+                    <div className='flex flex-row gap-2'>
+                      <Tooltip img={nav.icono} mensaje={nav.title} className='w-6 h-6' posicionMesaje='r' visible={`${barra ? 'true' : 'false'} `}/>
+                      {/* si barra es true muestra el titulo  */}
+                      {barra ?  
+                          <span className="text-xl font-bold  ">{nav.title}</span>
+                      : 
+                          ''
+                      }
+                    </div>
+                    {/* si selectOption es igual al id muestra las opciones de submenu */}
+                    {selectOption === nav.id ?
+                      nav.children.map((children,index) => (
+                        <Link key={index}
+                          onClick={()=>setselectOptionSubMenu(children.id)}
+                          to={children.to}
+                          className={`w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOptionSubMenu === children.id ? "  bg-[#edf8ff] border border-[#4870ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
+                        >
+                          <Tooltip img={children.icono} mensaje={children.title} className='w-6 h-6' posicionMesaje='r' visible={`${barra ? 'true' : 'false'} `}/>
+                          {barra ?  
+                            <span className="text-xl font-bold  ">{children.title}</span>
+                          : 
+                            ''
+                          }
+                        </Link>
+                      )) 
+                    :
+                      ''
+                    }
+
+                  </div>
+                </button>
+              )
+            }
+
+            return (
+              <Link key={index}
+                onClick={()=>setselectOption(nav.id)}
+                to={nav.to}
+                className={`w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOption === nav.id ? "  bg-[#edf8ff] border border-[#48b9ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
+              >
+                <Tooltip img={nav.icono} mensaje={nav.title} className='w-6 h-6' posicionMesaje='r' visible={`${barra ? 'true' : 'false'} `}/>
+                {/* <img src={nav.icono} alt={nav.title} className="w-8 h-8" /> */}
+                {barra ?  
+                    <span className="text-xl font-bold  ">{nav.title}</span>
+                : 
+                    ''
+                }
+              </Link>
+            )
+          }
+          )
+          }
 
         </div>
       </section>
@@ -143,5 +152,4 @@ const Panel = () => {
     </div>
   );
 };
-
 export default Panel;

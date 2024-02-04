@@ -3,11 +3,12 @@ import Home from './Home/layout/Home';
 import MainHome from "./Home/layout/MainHome";
 import Panel from "./Panel/layout/Panel";
 import Permisos from "./Panel/views/Permisos";
-import SharePoint from "./Panel/views/SharePoint";
+import SharePoint from "./Panel/views/SharePoint/Pages/SharePoint";
 import HomePanel from "./Panel/views/Home/Pages/HomePanel";
 import  Os  from "./Panel/views/Os/Pages/Os";
 import { Documentacion } from "./Panel/views/Documentacion/Pages/Documentacion";
 import { Project } from "./Panel/views/Project/views/Project";
+import { Usuarios } from "./Panel/views/Configuracion/Usuarios/Views/Usuarios";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -44,7 +45,11 @@ const router = createBrowserRouter([
             {
                 path:"/panel/docs",
                 element: <Documentacion/>
-            }
+            },
+            {
+                path:"/panel/configuracion/usuarios",
+                element: <Usuarios/>
+            },
           
         ]
     },

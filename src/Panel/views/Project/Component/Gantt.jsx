@@ -57,11 +57,11 @@ export const Gantt = () => {
         </div>
       </div>
       <div className=" md:max-w-[1470px] h-full bg-white  border-2 border-salte-300 flex flex-row overflow-hidden">
-        <div className="md:w-[19%] w-[40%] h-full text-[12px]  flex flex-col text-[#3c423f] ">
-          {/* titulos */}
+        <div className="md:w-[19%] w-[40%] h-full text-[10px]  flex flex-col text-[#3c423f] ">
+          {/* titulos de tareas  */}
           {tareas?.map(tarea => (
-            <div className="w-full h-10   overflow-auto border border-slate-200 flex items-center justify-center">
-              <p>{tarea.text}</p>      
+            <div className="w-full h-10  px-2 overflow-hidden border border-slate-200 flex items-center ">
+              <p className="text-left">{tarea.text}</p>      
             </div>
           ))}
         </div>
@@ -73,7 +73,7 @@ export const Gantt = () => {
               const duracionPx = duracionDias  > 0  ? (duracionDias * 40 ) + 40 + 'px' : 40 + 'px';
               return (
                 <div className="md:w-full w-[1240px] h-10 bg-white border p-2 flex items-center">
-                  {/* tarea */}
+                  {/* tareas */}
                   <div className={`h-[90%] bg-green-500 rounded-xl flex items-center hover:scale-110 hover:bg-green-300 transition-all`} 
                   style={{
                     marginLeft:inicioGantt,
@@ -92,7 +92,7 @@ export const Gantt = () => {
             }
             )}
           {/* dias */}
-          <div className="md:w-full w-[1240px] h-20 bg-white-700 text-slate-300   flex flex-row">
+          <div className="md:w-full w-[1280px] h-20 bg-white-700 text-slate-300   flex flex-row">
             {diasDiv}
           </div>
         </div>

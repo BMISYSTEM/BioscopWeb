@@ -89,13 +89,13 @@ const Calendario = () => {
   return (
     <div className='md:w-96 w-full h-auto flex flex-col p-2  rounded-xl'>
         <div className='w-full h-10 flex flex-row justify-between border-2 rounded-xl p1 items-center cursor-pointer'>
-            <div className={`${dia === 0 ? " bg-sky-700 text-white rounded-full " : "text-slate-600"} hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Lu</div>
-            <div className={`${dia === 1 ? " bg-sky-700 text-white rounded-full " : "text-slate-600"} hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Ma</div>
-            <div className={`${dia === 2 ? " bg-sky-700 text-white rounded-full " : "text-slate-600"} hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Mi</div>
-            <div className={`${dia === 3 ? " bg-sky-700 text-white rounded-full " : "text-slate-600"} hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Ju</div>
-            <div className={`${dia === 4 ? " bg-sky-700 text-white rounded-full " : "text-slate-600"} hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Vi</div>
-            <div className={`${dia === 5 ? " bg-sky-700 text-white rounded-full " : "text-slate-600"} hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Sa</div>
-            <div className={`${dia === 6 ? " bg-sky-700 text-white rounded-full " : "text-slate-600"} hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Do</div>
+            <div  key={1} className={`text-slate-600 hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Lu</div>
+            <div  key={2} className={`text-slate-600 hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Ma</div>
+            <div  key={3} className={`text-slate-600 hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Mi</div>
+            <div  key={4} className={`text-slate-600 hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Ju</div>
+            <div  key={5} className={`text-slate-600 hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Vi</div>
+            <div  key={6} className={`text-slate-600 hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Sa</div>
+            <div  key={7} className={`text-slate-600 hover:bg-slate-500/30 transition text-sm font-bold  p-1 w-full text-center`} >Do</div>
         </div>
         {diasCalendario.map(diasCalendario => (
             <div className='w-full h-10 flex flex-row justify-between p1 items-center '>

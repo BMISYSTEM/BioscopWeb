@@ -22,9 +22,9 @@ const HomePanel = () => {
     <HomePanelProvider>
       <div className="w-full h-[99%] bg-white rounded-xl flex flex-col gap-3 p-2 overflow-auto animate__animated  animate__fadeIn ">
         <Resumen/>
-        <section className="w-full md:h-72 h-auto   p-2 rounded-sm flex md:flex-row flex-col gap-2 shadow-lg ">
+        <section className="w-full h-auto   p-2 rounded-sm flex md:flex-row flex-col gap-2 shadow-lg ">
           {/* calendario */}
-          <div className="w-auto h-full flex flex-col gap-2 rounded-xl border-2">
+          <div className="w-auto h-auto flex flex-col gap-2 rounded-xl border-2">
             <Calendario />
           </div>
           {/* Pendientes para ese dia */}

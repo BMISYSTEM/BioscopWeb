@@ -1,21 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
-import { HeaderGantt } from "./HeaderGantt";
 import { useGantt } from "../Hooks/useGantt";
-import Modal from "react-modal";
 import 'animate.css'
-import { TareaModal } from "../Modales/TareaModal";
 import { Modales } from "./Modales";
 import { GanttContext } from "../context/GanttContext";
-
-import cerrar from '../Assets/cerrar.svg'
-import tatis from '../Assets/tati.jfif'
 import { Tooltip } from "../../../component/Tooltip";
 export const Gantt = () => {
+    /**Url del backend */
+  
+    /**url de la foto, se almacen en el localstorage al momento de iniciar session */
+    const foto = localStorage.getItem('foto')
     const {modalTareas,setModalTareas} = useContext(GanttContext)
     const [diasDiv,setDias] = useState();
     const {tooltip,visibletool,isLoading,tareas,tareaTooltip,duraciontooltip,diaFin} = useGantt();
     const [diasSvg,setDiasSvg] = useState([]);
 
+    
       /**
      * Esta calculando el espacio de las tareas para poder definir donde se colocaran los dias
      * @returns jsxElement
@@ -33,15 +32,13 @@ export const Gantt = () => {
         }
         setDias(elementos)
       }
-
     useEffect(()=>{
           dias();
     },[diaFin,tareas])
-
   return (
     <div className=" left-0 top-0 w-full h-full overflow-hidden  ">
       {/* opciones del gantt  */}
-      <HeaderGantt />
+      {/* <HeaderGantt /> */}
       <div className={"absolute hidden "} id="tool">
         <div className="w-40 h-auto bg-slate-200 flex flex-col gap-2 text-sm rounded-xl shadow-xl p-2">
           <p className="text-sm text-slate-500">
@@ -74,7 +71,7 @@ export const Gantt = () => {
               return (
                 <div className="md:w-full w-[1240px] h-10 bg-white border p-2 flex items-center">
                   {/* tareas */}
-                  <div className={`h-[90%] bg-green-500 rounded-xl flex items-center hover:scale-110 hover:bg-green-300 transition-all`} 
+                  <div className={`h-[90%] ${tarea.completado ? 'bg-green-500 hover:bg-green-300' : 'bg-sky-500 hover:bg-sky-300'} rounded-xl flex items-center hover:scale-110  transition-all`} 
                   style={{
                     marginLeft:inicioGantt,
                     width:duracionPx
@@ -84,7 +81,7 @@ export const Gantt = () => {
                   onClick={()=>setModalTareas(!modalTareas)}
                     >
                     {/* foto de integrante */}
-                    <Tooltip img={tatis} mensaje={'Tatiana ledesma'}/>
+                    {/* <Tooltip img={urlBackend + foto} mensaje={'Usuario'}/> */}
                   </div>
                 </div>
               )

@@ -18,6 +18,14 @@ export const useLogin = () => {
             throw Error(error?.response?.data?.errors)
         })
     )
+    const permisosUser = async(id_rol,setPermisos) =>{
+        const data = await clienteAxios('/api/findpermisos?id_rol='+id_rol,{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+        setPermisos(data.data.succes[0])
+    }
     const login = async(data,setEstatus) =>{
         try {
             const estatusdata = await clienteAxios.post('/api/login',data);
@@ -28,13 +36,11 @@ export const useLogin = () => {
         }
         
     }
-
     useEffect(()=>{
         if(user)
         {   
             navigate('/panel/home')
             return
-
         }
         //si el usuario no esta autenticado lo manda a iniciar session 
         if(error)
@@ -44,6 +50,8 @@ export const useLogin = () => {
     },[user,error])
 
   return {
-    login
+    login,
+    user,
+    permisosUser
   }
 }

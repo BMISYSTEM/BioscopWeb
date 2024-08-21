@@ -24,49 +24,49 @@ import config from "../assets/config.png";
 export const useOptionsNav = () => {
     const navar= [
         {
-          id:1,
+          id:'home',
           title: "Home",
           to: "/panel/home",
           icono: dashboard,
           children:[]
         },
         {
-          id:2,
+          id:'project',
           title: "Project",
           to: "/panel/project",
           icono: proyectos,
           children:[]
         },
         {
-          id:3,
+          id:'os',
           title: "OS",
           to: "/panel/os",
           icono: tarea,
           children:[]
         },
         {
-          id:4,
+          id:'permisos',
           title: "Permisos",
           to: "/panel/permiso",
           icono: documento,
           children:[]
         },
         {
-          id:5,
+          id:'sharepoint',
           title: "Sharepoint",
           to: "/panel/sharepoint",
           icono: carpetasUsuarios,
           children:[]
         },
         {
-          id:6,
+          id:'intinerario',
           title: "Intinerario",
           to: "/panel/intinerario",
           icono: intinerarios,
           children:[]
         },
         {
-          id:7,
+          id:'docs',
           title: "Docs",
           to: "/panel/docs",
           icono: documentos,
@@ -76,7 +76,7 @@ export const useOptionsNav = () => {
          * Cambiar el icono por uno de configuracion 
          */
         {
-          id:8,
+          id:'configuracion',
           title: "Configuracion",
           to: "null",
           icono: config,

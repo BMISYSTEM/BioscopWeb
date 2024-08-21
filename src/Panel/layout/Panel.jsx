@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import { Link, Outlet } from "react-router-dom";
 import { useLogin } from "../../Home/Hooks/useLogin";
 import "../home.css"
@@ -20,25 +20,42 @@ import relog from "../assets/relog.svg"
  */
 import { useOptionsNav } from '../Hooks/useOptionsNav';
 import { Tooltip } from '../component/Tooltip';
+import { usePermisosNav } from '../Hooks/usePermisosNav';
 
-const Panel = () => {
+const Panel =  () => {
+    /**Url del backend */
+  const urlBackend = import.meta.env.VITE_URL_BACK
+  /**url de la foto, se almacen en el localstorage al momento de iniciar session */
+  const foto = localStorage.getItem('foto')
     /**
      * Al estar consultando la variable user se obliga que se revalide que el usuario esta logueado y que su personal
      * asses token siga vigente
      */
     
     const {user} = useLogin();
+    const {isLoading,permisos} = usePermisosNav()
     const [barra,setbarra] = useState(false)
     const [selectOption,setselectOption] = useState(1)
+    const [infouser,setInfouser] = useState();
     const [selectOptionSubMenu,setselectOptionSubMenu] = useState(1)
+
+    if(isLoading){
+      return(
+        <p>Cargando informacion</p>
+      )
+    }
+    
+    const informacionUsuario = user?.succes
+    console.log()
     /**
      * Informacion de los botones de navegacion
      */
     const {navar} = useOptionsNav()
+    console.log(usuario)
   return (
     <div className="w-full h-screen flex md:flex-row flex-col overflow-hidden">
       {/* navegacion */}
-      <section className={`${barra ? 'md:w-1/6   h-full z-50 md:z-0 absolute md:relative w-full ' : 'md:w-[5rem] h-10 w-full  '} transition-all ease-in duration-300 md:h-screen  bg-white flex flex-col gap-2 p-2`}>
+      <section className={`${barra ? 'md:w-[15rem]   h-full z-50 md:z-0 absolute md:relative w-full ' : 'md:w-[5rem] h-10 w-full  '} transition-all ease-in duration-300 md:h-screen  bg-white flex flex-col gap-2 p-2`}>
         <div className="w-full h-auto flex md:items-end md:justify-end justify-center">
             <button onClick={()=>setbarra(!barra)} className="w-6 h-6 md:flex hidden ">
                 {barra ?  
@@ -59,81 +76,86 @@ const Panel = () => {
               </svg>
             </button>
         </div>
-        <div className={`w-full ${barra? 'h-32 md:flex hidden' : 'md:h-[5rem] hidden  '} border-2 rounded-xl md:transition-all  shadow-sm flex flex-col gap-2 items-center justify-center`}>
-            <img src={usuario} alt=" foto de usuario logueado" className={`w-full ${barra ? 'h-20' : 'h-5'} `} />
+        <div className={`w-20 ${barra? 'h-20 md:flex hidden' : 'md:h-[5rem] hidden  '} border-2 rounded-full md:transition-all  shadow-sm flex flex-col gap-2 items-center justify-center overflow-hidden`}>
+            <img src={urlBackend + foto} alt=" foto de usuario logueado" className={`object-contain w-full ${barra ? 'h-full' : 'h-5'} `} />
             {/* <p className={`${barra? 'flex' : 'hidden'}`}>Nombre de usuario</p> */}
         </div>
         {/* si la barra es true se coloca en formato flex sino desaparece */}
         <div className={` ${barra ? " flex " : " hidden md:flex"} flex-col gap-2`}>
-          {navar.map((nav,index) => {
-            
-            if (nav.children.length > 0 ) {
-              return (
-                <button key={index}
-                  onClick={()=>setselectOption(nav.id)}
-                  className={`w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOption === nav.id ? "  border-[0.1px] border-[#48b9ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
-                >
-                  <div className='flex flex-col gap-2'>
-                    <div className='flex flex-row gap-2'>
-                      <Tooltip img={nav.icono} mensaje={nav.title} className='w-6 h-6' posicionMesaje='r' visible={`${barra ? 'true' : 'false'} `}/>
-                      {/* si barra es true muestra el titulo  */}
-                      {barra ?  
-                          <span className="text-xl font-bold  ">{nav.title}</span>
-                      : 
-                          ''
-                      }
-                    </div>
-                    {/* si selectOption es igual al id muestra las opciones de submenu */}
-                    {selectOption === nav.id ?
-                      nav.children.map((children,index) => (
-                        <Link key={index}
-                          onClick={()=>setselectOptionSubMenu(children.id)}
-                          to={children.to}
-                          className={`w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOptionSubMenu === children.id ? "  bg-[#edf8ff] border border-[#4870ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
-                        >
-                          <Tooltip img={children.icono} mensaje={children.title} className='w-6 h-6' posicionMesaje='r' visible={`${barra ? 'true' : 'false'} `}/>
-                          {barra ?  
-                            <span className="text-xl font-bold  ">{children.title}</span>
-                          : 
+          {navar?.map((nav,index) => {
+            // Validacion de permisos de forma dinamica 
+            if(permisos.permisos[0][nav?.id]){
+              if (nav?.children.length > 0 ) {
+                return (
+                  <button key={index}
+                    onClick={()=>setselectOption(nav.id)}
+                    className={`w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOption === nav.id ? "  border-[0.1px] border-[#48b9ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
+                  >
+                    <div className='flex flex-col gap-2'>
+                      <div className='flex flex-row gap-2'>
+                        <Tooltip img={nav.icono} mensaje={nav.title} className='w-6 h-6' posicionMesaje='r' visible={`${barra ? 'true' : 'false'} `}/>
+                        {/* si barra es true muestra el titulo  */}
+                        {barra ?  
+                            <span className="text-xl font-bold  ">{nav.title}</span>
+                        : 
                             ''
-                          }
-                        </Link>
-                      )) 
-                    :
+                        }
+                      </div>
+                      {/* si selectOption es igual al id muestra las opciones de submenu */}
+                      {selectOption === nav.id ?
+                        nav.children.map((children,index) => (
+                          <Link key={index}
+                            onClick={()=>setselectOptionSubMenu(children.id)}
+                            to={children.to}
+                            className={`w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOptionSubMenu === children.id ? "  bg-[#edf8ff] border border-[#4870ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
+                          >
+                            <Tooltip img={children.icono} mensaje={children.title} className='w-6 h-6' posicionMesaje='r' visible={`${barra ? 'true' : 'false'} `}/>
+                            {barra ?  
+                              <span className="text-xl font-bold  ">{children.title}</span>
+                            : 
+                              ''
+                            }
+                          </Link>
+                        )) 
+                      :
+                        ''
+                      }
+  
+                    </div>
+                  </button>
+                )
+              }
+  
+              return (
+                <Link key={index}
+                  onClick={()=>setselectOption(nav.id)}
+                  to={nav.to}
+                  className={`w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOption === nav.id ? "  bg-[#edf8ff] border border-[#48b9ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
+                >
+                  <Tooltip img={nav.icono} mensaje={nav.title} className='w-6 h-6' posicionMesaje='r' visible={`${barra ? 'true' : 'false'} `}/>
+                  {/* <img src={nav.icono} alt={nav.title} className="w-8 h-8" /> */}
+                  {barra ?  
+                      <span className="text-xl font-bold  ">{nav.title}</span>
+                  : 
                       ''
-                    }
-
-                  </div>
-                </button>
+                  }
+                </Link>
               )
             }
-
-            return (
-              <Link key={index}
-                onClick={()=>setselectOption(nav.id)}
-                to={nav.to}
-                className={`w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOption === nav.id ? "  bg-[#edf8ff] border border-[#48b9ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
-              >
-                <Tooltip img={nav.icono} mensaje={nav.title} className='w-6 h-6' posicionMesaje='r' visible={`${barra ? 'true' : 'false'} `}/>
-                {/* <img src={nav.icono} alt={nav.title} className="w-8 h-8" /> */}
-                {barra ?  
-                    <span className="text-xl font-bold  ">{nav.title}</span>
-                : 
-                    ''
-                }
-              </Link>
-            )
           }
           )
           }
-
         </div>
       </section>
       {/* contenido se renderiza al momento de dar click en algunos de las opciones del aside*/} 
       <main className="w-full h-screen bg-slate-200 flex flex-col p-1 ">
         {/* cabecera con opciones rapidas*/}
-        <header className="w-full h-10 bg-white rounded-xl shadow-xl flex flex-row gap-4 items-center justify-center p-2">
-          <div className="w-full flex flex-row gap-4 justify-center">
+        <header className="w-full h-10 bg-white rounded-xl shadow-xl flex flex-row gap-4   p-2">
+          <div className='w-full'>
+            <p>Usuario: <span className='text-lg font-bold text-slate-400'>{informacionUsuario.name } {informacionUsuario.apellido}</span></p> 
+            
+          </div>
+          <div className="w-full flex flex-row gap-4 ">
             <button className="w-6 h-6 hover:scale-110 transition">
               <img src={alarma} alt="notificaciones" className="w-6 h-6" title="Notificaciones"/>
             </button>
@@ -145,7 +167,7 @@ const Panel = () => {
             </button>
           </div>
         </header>
-        <section className="w-full h-full p-2 flex flex-col">
+        <section className="w-full h-[95%] p-2 flex flex-col">
           <Outlet/>            
         </section>
       </main>

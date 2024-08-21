@@ -80,6 +80,8 @@ export const useNota = () => {
         }
     }).then((response) => response.data)
   )
+
+  
   return {
     newNota,
     indexNotas,

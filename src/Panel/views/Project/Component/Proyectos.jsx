@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 /**
  * imagenes
  */
 import bajar from '../Assets/bajar.svg';
 import { Tooltip } from '../../../component/Tooltip';
+import { GanttContext } from '../context/GanttContext';
+import { Modales } from './Modales';
 export const Proyectos = () => {
-
-
+    const {newProject,setNewProject} = useContext(GanttContext);
+    console.log(newProject)
     // agregar a la clase hidden al elemento seleccionado
     const hiddenTr = (id) =>{
         /**
@@ -26,35 +28,13 @@ export const Proyectos = () => {
     <section className='w-full h-full  flex flex-col gap-2'>
         {/* opciones de proyectos como nuevo proyecto,editar uno nuevo,eliminar un proyecto */}
         <div className='w-full h-20 p-2 flex flex-row items-center '>
-            <button className='text-sm font-bold text-white bg-sky-500 p-2 rounded-sm shadow-xl hover:scale-105 hover:bg-sky-800 transition-all '>
+            <button className='text-sm font-bold text-white bg-sky-500 p-2 rounded-sm shadow-xl hover:scale-105 hover:bg-sky-800 transition-all ' 
+            onClick={()=>setNewProject(!newProject)}
+            >
                 Nuevo proyecto
             </button>
         </div>
         {/* <section className='w-full h-full  grid grid-cols-3 gap-2 p-2'>
-            <div className='w-96 h-40 bg-white rounded-xl shadow-xl border hover:scale-105 transition-all p-2 flex flex-col'>
-                <p className='text-lg font-bold font-serif text-slate-600'>Implementacion Manuelita</p>
-                <p className='text-sm  text-slate-600'>Porcentaje actual: <span className='text-xl font-bold'>25%</span></p>
-                <p className='text-sm  text-slate-600'>Horas de proyecto: <span className='text-xl font-bold'>2000 h</span></p>
-                <p className='text-sm  text-slate-600'>Horas de consumidas: <span className='text-xl font-bold'>1000 h</span></p>
-            </div>
-            <div className='w-96 h-40 bg-white rounded-xl shadow-xl border hover:scale-105 transition-all p-2 flex flex-col'>
-                <p className='text-lg font-bold font-serif text-slate-600'>Implementacion Manuelita</p>
-                <p className='text-sm  text-slate-600'>Porcentaje actual: <span className='text-xl font-bold'>25%</span></p>
-                <p className='text-sm  text-slate-600'>Horas de proyecto: <span className='text-xl font-bold'>2000 h</span></p>
-                <p className='text-sm  text-slate-600'>Horas de consumidas: <span className='text-xl font-bold'>1000 h</span></p>
-            </div>
-            <div className='w-96 h-40 bg-white rounded-xl shadow-xl border hover:scale-105 transition-all p-2 flex flex-col'>
-                <p className='text-lg font-bold font-serif text-slate-600'>Implementacion Manuelita</p>
-                <p className='text-sm  text-slate-600'>Porcentaje actual: <span className='text-xl font-bold'>25%</span></p>
-                <p className='text-sm  text-slate-600'>Horas de proyecto: <span className='text-xl font-bold'>2000 h</span></p>
-                <p className='text-sm  text-slate-600'>Horas de consumidas: <span className='text-xl font-bold'>1000 h</span></p>
-            </div>
-            <div className='w-96 h-40 bg-white rounded-xl shadow-xl border hover:scale-105 transition-all p-2 flex flex-col'>
-                <p className='text-lg font-bold font-serif text-slate-600'>Implementacion Manuelita</p>
-                <p className='text-sm  text-slate-600'>Porcentaje actual: <span className='text-xl font-bold'>25%</span></p>
-                <p className='text-sm  text-slate-600'>Horas de proyecto: <span className='text-xl font-bold'>2000 h</span></p>
-                <p className='text-sm  text-slate-600'>Horas de consumidas: <span className='text-xl font-bold'>1000 h</span></p>
-            </div>
             <div className='w-96 h-40 bg-white rounded-xl shadow-xl border hover:scale-105 transition-all p-2 flex flex-col'>
                 <p className='text-lg font-bold font-serif text-slate-600'>Implementacion Manuelita</p>
                 <p className='text-sm  text-slate-600'>Porcentaje actual: <span className='text-xl font-bold'>25%</span></p>
@@ -88,6 +68,9 @@ export const Proyectos = () => {
                     <td className='border text-lg font-bold font-mono p-1'>
                         Estatus
                     </td>
+                    <td className='border text-lg font-bold font-mono p-1'>
+                        Asignado
+                    </td>
                 </tr>
                 {/* filas */}
                 {/* item o titulo de categoria */}
@@ -116,6 +99,9 @@ export const Proyectos = () => {
                     <td className='text-sm border px-10 font-bold'>
                         En proceso
                     </td>
+                    <td className='text-sm border px-10 font-bold'>
+                       
+                    </td>
                 </tr>
                 {/* fila de tareas normales */}
                     <tr className='w-full border-2 visible1' >
@@ -137,25 +123,8 @@ export const Proyectos = () => {
                         <td className='text-sm border px-10' >
                             En proceso
                         </td>
-                    </tr>
-                    <tr className='w-full border-2 visible1' >
-                        <td className='text-sm border px-10'>
-                            Presupuesto
-                        </td>
-                        <td className='text-sm border px-10'>
-                            01/29/2024
-                        </td>
-                        <td className='text-sm border px-10'>
-                            01/29/2024
-                        </td>
-                        <td className='text-sm border px-10'>
-                            5
-                        </td>
-                        <td className='text-sm border px-10'>
-                            0 %
-                        </td>
-                        <td className='text-sm border px-10'>
-                            En proceso
+                        <td className='text-sm border px-10' >
+                            Bayron Meneses
                         </td>
                     </tr>
                     <tr className='w-full border-2 visible1' >
@@ -176,6 +145,32 @@ export const Proyectos = () => {
                         </td>
                         <td className='text-sm border px-10'>
                             En proceso
+                        </td>
+                        <td className='text-sm border px-10' >
+                            Bayron Meneses
+                        </td>
+                    </tr>
+                    <tr className='w-full border-2 visible1' >
+                        <td className='text-sm border px-10'>
+                            Presupuesto
+                        </td>
+                        <td className='text-sm border px-10'>
+                            01/29/2024
+                        </td>
+                        <td className='text-sm border px-10'>
+                            01/29/2024
+                        </td>
+                        <td className='text-sm border px-10'>
+                            5
+                        </td>
+                        <td className='text-sm border px-10'>
+                            0 %
+                        </td>
+                        <td className='text-sm border px-10'>
+                            En proceso
+                        </td>
+                        <td className='text-sm border px-10' >
+                            Bayron Meneses
                         </td>
                     </tr>
                     <tr className='w-full border-2 visible1'>
@@ -196,6 +191,9 @@ export const Proyectos = () => {
                         </td>
                         <td className='text-sm border px-10'>
                             En proceso
+                        </td>
+                        <td className='text-sm border px-10' >
+                            Bayron Meneses
                         </td>
                     </tr>
                  {/* item o titulo de categoria */}
@@ -267,6 +265,7 @@ export const Proyectos = () => {
                 </tr>
             </table>
         </section>
+        <Modales/>
     </section>
   )
 }

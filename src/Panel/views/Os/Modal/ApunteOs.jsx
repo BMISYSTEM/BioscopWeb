@@ -32,6 +32,7 @@ export const ApunteOs = () => {
   const [fecha, setFecha] = useState(editData?.fecha);
   const [hora, setHora] = useState(editData?.hora);
   const [estado, setEstado] = useState(editData?.id_estado);
+  console.log(estados.data.succes)
   useEffect(() => {
     setNota(editData?.nota);
     setFecha(editData?.fecha);
@@ -143,7 +144,7 @@ export const ApunteOs = () => {
                 onChange={(e) => setEstado(e.target.value)}
               >
                 <option value="">Seleccione un Estado</option>
-                {estados?.map((estado) => (
+                {estados?.data?.succes?.map((estado) => (
                   <option value={estado.id} key={estado.id}>
                     {estado.nombre}
                   </option>

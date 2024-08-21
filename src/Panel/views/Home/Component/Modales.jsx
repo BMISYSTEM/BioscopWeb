@@ -4,9 +4,10 @@ import { NewNota } from "../Modal/NewNota";
 import { UpdateNota } from "../Modal/UpdateNota";
 import { HomePanelContext } from "../Context/HomePanelContext";
 import 'animate.css';
+import { OkNota } from "../Modal/OkNota";
 
 export const Modales = () => {
-    const { modalNewNota,modalUpdateNota,setmodalUpdateNota } = useContext(HomePanelContext);
+    const { modalNewNota,modalUpdateNota,modalOkNota } = useContext(HomePanelContext);
   return (
     <>
       <Modal
@@ -24,6 +25,14 @@ export const Modales = () => {
         }
       >
         <UpdateNota />
+      </Modal>
+      <Modal
+        isOpen={modalOkNota}
+        className={
+          "bg-slate-800/40 backdrop-blur-sm w-full h-screen grid place-items-center "
+        }
+      >
+        <OkNota />
       </Modal>
     </>
   );

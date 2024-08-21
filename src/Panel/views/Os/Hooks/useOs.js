@@ -9,7 +9,7 @@ export const useOs = () => {
         headers:{
             Authorization:`Bearer ${Bearer}`
         }
-    }).then(response => response.data.succes)
+    })
     )
         /**
      * Carga listado de clientes
@@ -19,7 +19,7 @@ export const useOs = () => {
             headers:{
                 Authorization: `Bearer ${Bearer}`
             }
-        }).then(response => response.data.succes)
+        })
     )
     /**
      * Carga listado de estados
@@ -29,7 +29,7 @@ export const useOs = () => {
             headers:{
                 Authorization: `Bearer ${Bearer}`
             }
-        }).then(response => response.data.succes)
+        })
     )
     /**
      * Carga listado de usuarios
@@ -40,7 +40,7 @@ export const useOs = () => {
             headers:{
                 Authorization: `Bearer ${Bearer}`
             }
-        }).then(response => response.data.succes)
+        })
     )
   return {
     indexOS,

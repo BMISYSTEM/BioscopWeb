@@ -37,7 +37,6 @@ const Home = () => {
               <Veneficios/>
               <Paises/>
             </main>
-
             <footer>
               <Footer/>
             </footer>

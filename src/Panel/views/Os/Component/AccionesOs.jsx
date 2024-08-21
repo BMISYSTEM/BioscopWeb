@@ -51,7 +51,7 @@ export const AccionesOs = () => {
             // onChange={(e)=>setCliente(e.target.value)}
         >
             <option value={0} >Seleccione un cliente</option>
-            {clientes?.map(cliente => (
+            {clientes?.data.succes.map(cliente => (
                 <option value={cliente.id} key={cliente.id}>{cliente.nombre}</option>
             ))}
       </select>
@@ -62,7 +62,7 @@ export const AccionesOs = () => {
             // onChange={(e)=>setCliente(e.target.value)}
         >
             <option value={0} >Seleccione un usuario</option>
-            {usuarios?.map(usuarios => (
+            {usuarios?.data.succes.map(usuarios => (
                 <option value={usuarios.id} key={usuarios.id}>{usuarios.name}</option>
             ))}
       </select>
@@ -73,7 +73,7 @@ export const AccionesOs = () => {
             // onChange={(e)=>setCliente(e.target.value)}
         >
             <option value={0} >Seleccione un estado</option>
-            {estados?.map(estados => (
+            {estados?.data.succes.map(estados => (
                 <option value={estados.id} key={estados.id}>{estados.nombre}</option>
             ))}
       </select>

@@ -18,6 +18,11 @@ export const HomePanelProvider = ({children}) => {
    */
   const [modalUpdateNota,setmodalUpdateNota] = useState(false);
   /**
+   * Modal para confirmar el final de una tarea
+   */
+  const [modalOkNota,setmodalOkNota] = useState(false);
+  const [idOkNota,setidOkNota] = useState();
+  /**
    * Codigo de la nota a actualizar
    */
   const [idUpdateNota,setidUpdateNota] = useState(null)
@@ -35,7 +40,9 @@ export const HomePanelProvider = ({children}) => {
         verMensaje,SetVerMensaje,
         fechaNota,setFechaNota,
         modalUpdateNota,setmodalUpdateNota,
-        idUpdateNota,setidUpdateNota
+        idUpdateNota,setidUpdateNota,
+        modalOkNota,setmodalOkNota,
+        idOkNota,setidOkNota
     }}>
         {children}
     </Provider>

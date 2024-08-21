@@ -122,7 +122,7 @@ export const NewOs = () => {
           onChange={(e) => setCliente(e.target.value)}
         >
           <option value={0}>Seleccione un cliente</option>
-          {clientes?.map((cliente) => (
+          {clientes?.data.succes.map((cliente) => (
             <option value={cliente.id} key={cliente.id}>
               {cliente.nombre}
             </option>
@@ -141,7 +141,7 @@ export const NewOs = () => {
           onChange={(e) => setEstado(e.target.value)}
         >
           <option value="">Seleccione un Estado</option>
-          {estados?.map((estado) => (
+          {estados?.data.succes.map((estado) => (
             <option value={estado.id} key={estado.id}>
               {estado.nombre}
             </option>
@@ -160,7 +160,7 @@ export const NewOs = () => {
           onChange={(e) => setUser(e.target.value)}
         >
           <option value="">Seleccione un usuario</option>
-          {usuarios?.map((usuario) => (
+          {usuarios?.data.succes.map((usuario) => (
             <option value={usuario.id} key={usuario.id}>
               {usuario.name}
             </option>

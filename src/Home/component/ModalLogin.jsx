@@ -29,6 +29,7 @@ const ModalLogin = () => {
     toast.success(estatus?.data?.succes)
     setEstatus(null)
     localStorage.setItem('token',estatus.data.token)
+    localStorage.setItem('foto',estatus.data.foto)
   }
   if(estatus?.response?.data?.errors)
   {
@@ -63,7 +64,7 @@ const ModalLogin = () => {
         </label>
         <input
           onChange={(e)=>setEmail(e.target.value)}
-          value={estatus}
+          value={email}
           type="text"
           className="p-2 border-2 rounded-xl text-center text-sm font-bold "
           placeholder="Correo electrónico"

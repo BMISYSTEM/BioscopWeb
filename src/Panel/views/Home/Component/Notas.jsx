@@ -37,7 +37,7 @@ export const Notas = () => {
         </button>
       </div>
       {indexNotas?.succes.map(nota =>(
-        <RowNota key={nota.id} text={nota.text} data={nota.data} id={nota.id}/>
+        <RowNota key={nota.id} text={nota.text} data={nota.data} id={nota.id} completado={nota.completado}/>
       ))}
       
     </section>

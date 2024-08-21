@@ -29,7 +29,7 @@ export const Os = () => {
         <AccionesOs />
         {/* lista de os */}
         <div className="w-full md:h-[80%] h-screen  flex flex-col gap-2 p-2 items-center overflow-auto  ">
-            {indexOS?.map((os) => (
+            {indexOS?.data.succes.map((os) => (
             <OsRow key={os.id} os={os} />
             ))}
         </div>

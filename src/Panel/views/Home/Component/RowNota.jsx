@@ -10,8 +10,9 @@ import editar from "../Assets/editar.svg";
 import completo from "../Assets/completo.svg"
 import { Tooltip } from '../../../component/Tooltip';
 
-export const RowNota = ({text,data,id}) => {
-  const {verMensaje,SetVerMensaje,modalUpdateNota,setmodalUpdateNota,idUpdateNota,setidUpdateNota} = useContext(HomePanelContext);
+export const RowNota = ({text,data,id,completado}) => {
+  const {verMensaje,SetVerMensaje,modalUpdateNota,setmodalUpdateNota,idUpdateNota,setidUpdateNota,
+    setmodalOkNota,modalOkNota,idOkNota,setidOkNota} = useContext(HomePanelContext);
   const {deleteNota} = useNota();
   const [estatus,setEstatus] = useState();
   /**
@@ -37,6 +38,12 @@ export const RowNota = ({text,data,id}) => {
     setidUpdateNota(id);
     setmodalUpdateNota(!modalUpdateNota);
   }
+  const handleClickOkNota = (id) =>
+  {
+    console.log(id)
+    setidOkNota(id)
+    setmodalOkNota(!modalOkNota)
+  }
   
   if(estatus?.data?.succes){
     toast.success(estatus?.data?.succes,{position:'top-center'});
@@ -46,7 +53,7 @@ export const RowNota = ({text,data,id}) => {
     <>
       <button 
       onClick={()=>seleccion(text,data)}
-      className="w-full h-10 border-2 rounded-xl flex flex-row gap-2 justify-between  items-center p-1 text-slate-700 hover:text-sky-700 hover:border-indigo-600  transition cursor-pointer">
+      className={` ${ completado ? 'bg-green-300 text-green-800 font-bold' : ''} w-full h-10 border-2 rounded-xl flex flex-row gap-2 justify-between  items-center p-1 text-slate-700 hover:text-sky-700 hover:border-indigo-600  transition cursor-pointer`}>
         <div className='w-full flex justify-between'>
           <span className="text-sm font-bold">
             {text}
@@ -62,10 +69,14 @@ export const RowNota = ({text,data,id}) => {
         <button className="flex flex-row gap-2 hover:scale-110" onClick={()=>handleUpdateNota(id)}>
           <Tooltip img={editar} mensaje={'Editar'} key={2}/>
         </button>
-        
-        <button className="flex flex-row gap-2 hover:scale-110" onClick={()=>handleUpdateNota(id)}>
-          <Tooltip img={completo} mensaje={'Realizado'} key={3}/>
-        </button>
+        {/* confirmar la nota y gerenar apuntamiento si viene 1 es por que ya se marco completado*/}
+        {completado ?
+          ''        
+        : 
+          <button className="flex flex-row gap-2 hover:scale-110" onClick={()=>handleClickOkNota(id)}>
+            <Tooltip img={completo} mensaje={'Realizado'} key={3}/>
+          </button>
+        }
       </div>
       </button>
       <ToastContainer/>

@@ -51,7 +51,7 @@ const Panel =  () => {
      * Informacion de los botones de navegacion
      */
     const {navar} = useOptionsNav()
-    console.log(usuario)
+    console.log(permisos)
   return (
     <div className="w-full h-screen flex md:flex-row flex-col overflow-hidden">
       {/* navegacion */}
@@ -84,7 +84,7 @@ const Panel =  () => {
         <div className={` ${barra ? " flex " : " hidden md:flex"} flex-col gap-2`}>
           {navar?.map((nav,index) => {
             // Validacion de permisos de forma dinamica 
-            if(permisos.permisos[0][nav?.id]){
+            if(permisos?.permisos[0][nav?.id]){
               if (nav?.children.length > 0 ) {
                 return (
                   <button key={index}

@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { v4 } from "uuid";
 /**
  * Importacion de imagenes
  */
 import sheart from "../Assets/sheart.svg";
-import grupo from "../Assets/grupo.svg";
-import gantt from "../Assets/gantt.jpg";
+import clienteAxios from "../../../../Config/axios";
+import { useDocumentacion } from "../Hooks/useDocumentacion";
+import { toast, ToastContainer } from "react-toastify";
+import useSWR from "swr";
 export const Documentacion = () => {
+  const token = localStorage.getItem('token')
+  const {loadingModulos,modulos,mutateModulos} = useDocumentacion()
   /**
    * interface documentacion{
    *  id:v4(),
@@ -22,25 +26,42 @@ export const Documentacion = () => {
   const [documentacion, setDocumentacion] = useState([]);
   const [addDocumentacion, setAddDocumentacion] = useState(null);
   const [barra, setBarra] = useState(false);
+  const [nombreModulo,setNombreModulo] = useState(null)
+  /**
+   * 1: editar
+   * 2:eliminar
+   */
+  const [actionModule,setactionModule] = useState(null)
+  const [editModule,setEditModulo] = useState(null)
+  const [moduloSelect,setmoduloSelect] = useState(0)
   const [title,setTitle] = useState(null)
   const [parrafo,setParrafo] = useState(null)
   const [imagen,setImagen] = useState(null)
   /** 
    * Agregar titulo a documentacion
    */
-  const addTitle = (e) =>{
+  const addTitle = async(e) =>{
     e.preventDefault();
     if (title) {
-      const newDocument = [...documentacion,{
-        id:v4(),
-        module: 1,
-        position: 1,
-        type: 1, //titulo
-        title: title,
-        imagen:'',
-        text: "",
-      }]
-      setDocumentacion(newDocument)
+      const datos ={
+        id_modulo: moduloSelect,
+          posicion: 1,
+          tipo: 1, //titulo
+          title: title,
+          image:'-',
+          text: "-",
+      }
+        toast.promise(clienteAxios.post('/api/createdocument',datos,{
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }),{
+          pending: 'Actualizando documento ',
+          success: 'Se Actualizo el documento',
+          error: 'Se genero un erro al actualizar el documento 🤯'
+        },{position:"top-right",autoClose:1000}) 
+     
+      cargaDocument()
       setTitle(null)
       setAddDocumentacion(null)
     }
@@ -51,16 +72,27 @@ export const Documentacion = () => {
   const addParrafo = (e) =>{
     e.preventDefault();
     if (parrafo) {
-      const newDocument = [...documentacion,{
-        id:v4(),
-        module: 1,
-        position: 1,
-        type: 2, //parrafo
-        title: '',
-        imagen:'',
-        text: parrafo,
-      }]
-      setDocumentacion(newDocument)
+      const datos ={
+          id_modulo: moduloSelect,
+          posicion: 1,
+          tipo: 2, //parrafo
+          title: '-',
+          image:'-',
+          text: parrafo,
+      }
+        toast.promise(clienteAxios.post('/api/createdocument',datos,{
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }),{
+          pending: 'Actualizando documento ',
+          success: 'Se Actualizo el documento',
+          error: 'Se genero un erro al actualizar el documento 🤯'
+        },{position:"top-right",autoClose:1000}) 
+     
+      cargaDocument()
+      setTitle(null)
+      setAddDocumentacion(null)
       setParrafo(null)
       setAddDocumentacion(null)
     }
@@ -71,16 +103,25 @@ export const Documentacion = () => {
   const addAlert = (e) =>{
     e.preventDefault();
     if (parrafo && title) {
-      const newDocument = [...documentacion,{
-        id:v4(),
-        module: 1,
-        position: 1,
-        type: 3, //alerta
+      const datos ={
+        id_modulo: moduloSelect,
+        posicion: 1,
+        tipo: 3, //parrafo
         title: title,
-        imagen:'',
+        image:'-',
         text: parrafo,
-      }]
-      setDocumentacion(newDocument)
+    }
+      toast.promise(clienteAxios.post('/api/createdocument',datos,{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      }),{
+        pending: 'Actualizando documento ',
+        success: 'Se Actualizo el documento',
+        error: 'Se genero un erro al actualizar el documento 🤯'
+      },{position:"top-right",autoClose:1000}) 
+   
+      cargaDocument()
       setParrafo(null)
       setTitle(null)
       setAddDocumentacion(null)
@@ -105,19 +146,28 @@ export const Documentacion = () => {
     /** 
    * Agregar una imagen a documentacion
    */
-    const addImagen = (e) =>{
+    const addImagen = async (e) =>{
       e.preventDefault();
       if (title && imagen) {
-        const newDocument = [...documentacion,{
-          id:v4(),
-          module: 1,
-          position: 1,
-          type: 4, //alerta
+        const datos ={
+          id_modulo: moduloSelect,
+          posicion: 1,
+          tipo: 4, //parrafo
           title: title,
           image:imagen,
-          text: '',
-        }]
-        setDocumentacion(newDocument)
+          text: '-',
+      }
+        await toast.promise(clienteAxios.post('/api/createdocument',datos,{
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }),{
+          pending: 'Actualizando documento ',
+          success: 'Se Actualizo el documento',
+          error: 'Se genero un erro al actualizar el documento 🤯'
+        },{position:"top-right",autoClose:1000}) 
+     
+        await cargaDocument()
         setParrafo(null)
         setTitle(null)
         setImagen(null)
@@ -125,6 +175,91 @@ export const Documentacion = () => {
       }
     }
 
+    /**
+     * crea el modulo en la base de datos
+     */
+    const createModulo = async(e) =>{
+      e?.preventDefault()
+      if(nombreModulo)
+      {
+        if(actionModule === 1 )
+        {
+          try {
+            const datos ={
+              id_modulo:editModule,
+              sistema:1,
+              nombre:nombreModulo
+            }
+            const {data} = await clienteAxios.post('/api/updatemodulo',datos,{
+              headers:{
+                Authorization:`Bearer ${token}`
+              }
+            })
+            mutateModulos()
+            setactionModule(null)
+          } catch (error) {
+            setactionModule(null)
+            console.log(error)
+          }
+        }else{
+          try {
+            const datos ={
+              sistema:1,
+              nombre:nombreModulo
+            }
+            const {data} = await clienteAxios.post('/api/createmodulo',datos,{
+              headers:{
+                Authorization:`Bearer ${token}`
+              }
+            })
+            mutateModulos()
+            console.log(data)
+          } catch (error) {
+            console.log(error)
+          }
+        }
+      }
+      setNombreModulo(null)
+      setAddDocumentacion(null)
+    }
+    /**
+     * eliminar modulo
+     */
+    const deleteModulo = async(id) =>{
+        try {
+          toast.promise(clienteAxios('/api/deletemodulo?id='+id,{
+            headers:{
+              Authorization:`Bearer ${token}`
+            }
+          }),{
+            pending: 'Eliminando el modulo',
+            success: 'Se elimino el modulo',
+            error: 'Se genero un erro al eliminar el modulo 🤯'
+          },{position:"top-right",autoClose:1000}) 
+          mutateModulos()
+          setactionModule(null)
+        } catch (error) {
+          setactionModule(null)
+          console.log(error)
+        }
+      }
+    
+    /**
+     * crear nuevo withget
+     */
+    const cargaDocument = async()=>{
+      const {data} = await clienteAxios('api/alldocumentacion?id='+moduloSelect,{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      })
+      setDocumentacion(data)
+    }
+    useEffect(()=>{
+      cargaDocument()
+    },[moduloSelect])
+    const allModulos = modulos?.data
+    console.log(documentacion)
   return (
     <section className="w-full h-full bg-gradient-to-r from-slate-900 to-sky-800   flex md:flex-row flex-col overflow-auto ">
       {/* boton de expandir */}
@@ -176,58 +311,58 @@ export const Documentacion = () => {
         </button>
         {/* opciones principales */}
         <div className=" w-full h-full mt-20">
-          <button className="flex flex-row gap-2 items-center">
-            <img src={grupo} alt="" className="w-6 h-6" />
+          <div className="w-full flex flex-row justify-between items-center">
             <p className="text-[16px] font-sans font-bold text-white">Siagri</p>
-          </button>
+            <button
+            onClick={()=>setAddDocumentacion(0)}
+            className="border-2 border-transparent font-sans font-bold text-white  rounded-full p-2 hover:scale-105  hover:text-green-500  transition-all">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+            </button>
+          </div>
+          {loadingModulos ? 
+              <p className="text-lg animate-bounce text-white">Cargando modulos...</p>
+              :
+              null
+            }
           {/* opciones de pagina de siagri */}
           <div className="w-full flex flex-col gap-3 p-2 px-10">
-            <p className="text-slate-100">Gantt</p>
-            <p className="text-slate-100">Palnificacion</p>
-            <p className="text-slate-100">Apuntamientos</p>
-            <p className="text-slate-100">Siembra</p>
-            <p className="text-slate-100">Cierres</p>
-            <p className="text-slate-100">Otros costos</p>
-            <p className="text-slate-100">Distribucion</p>
+            {allModulos?.map((modulo,index)=>(
+              <div key={index} className="w-full flex justify-between items-center">
+                <button  className="text-slate-100" onClick={()=>setmoduloSelect(modulo.id)}>{modulo.nombre}</button>
+                <div className="flex flex-row gap-1">
+                  <button onClick={()=>{
+                    setactionModule(1)
+                    setEditModulo(modulo.id)
+                    setNombreModulo(modulo.nombre)
+                    setAddDocumentacion(0)
+                    }} className="border-2 border-transparent font-sans font-bold text-white  rounded-full p-2 hover:scale-105  hover:text-green-500  transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                  </button>
+                  <button
+                   onClick={()=>deleteModulo(modulo.id)} 
+                    className="border-2 border-transparent font-sans font-bold text-white  rounded-full p-2 hover:scale-105  hover:text-red-500  transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+            ))}
+            
           </div>
-          <button className="flex flex-row gap-2 items-center">
-            <img src={grupo} alt="" className="w-6 h-6" />
-            <p className="text-[16px] font-sans font-bold text-white">Sigin</p>
-          </button>
-          {/* opciones de pagina de sigin */}
-          <div className="w-full flex flex-col gap-3 p-2 px-10">
-            <p className="text-slate-100">Gantt</p>
-            <p className="text-slate-100">Palnificacion</p>
-            <p className="text-slate-100">Apuntamientos</p>
-            <p className="text-slate-100">Siembra</p>
-            <p className="text-slate-100">Cierres</p>
-            <p className="text-slate-100">Otros costos</p>
-            <p className="text-slate-100">Distribucion</p>
-          </div>
-          <button className="flex flex-row gap-2 items-center">
-            <img src={grupo} alt="" className="w-6 h-6" />
-            <p className="text-[16px] font-sans font-bold text-white">Siman</p>
-          </button>
-          {/* opciones de pagina de sigin */}
-          <div className="w-full flex flex-col gap-3 p-2 px-10">
-            <p className="text-slate-100">Gantt</p>
-            <p className="text-slate-100">Palnificacion</p>
-            <p className="text-slate-100">Apuntamientos</p>
-            <p className="text-slate-100">Siembra</p>
-            <p className="text-slate-100">Cierres</p>
-            <p className="text-slate-100">Otros costos</p>
-            <p className="text-slate-100">Distribucion</p>
-          </div>
-          <button className="flex flex-row gap-2 items-center">
-            <img src={grupo} alt="" className="w-6 h-6" />
-            <p className="text-[16px] font-sans font-bold text-white">SiCap</p>
-          </button>
+         
         </div>
       </div>
       {/* main panel central */}
       <main className="md:w-[60%] w-full h-full flex flex-col gap-3 p-2  text-slate-200 ">
         {documentacion.map((document, index) => {
-          switch (document.type) {
+          switch (document.tipo) {
             case 1: //titulos
               return (
                 <p id={document.id} className="text-2xl font-bold text-slate-300">
@@ -336,6 +471,30 @@ export const Documentacion = () => {
           <a href={`#${title.id}`} className="text-sm text-white">{title.title}</a>
         ))}
       </div>
+      <Modal isOpen={addDocumentacion === 0 ? true : false} className={'w-full h-full flex justify-center items-center backdrop-blur-sm animate__animated  animate__fadeIn'}>
+        <div className="w-96 h-auto p-2 flex flex-col gap-5 bg-white border-2 rounded-xl border-indigo-500">
+          <div className="w'full flex flex'row justify-end">
+            <button className="rounded-full text-sm w-6 h-6 p-1 text-white font-bold bg-red-500 flex items-center justify-center hover:scale-105 transition-all" onClick={()=>setAddDocumentacion(null)}>
+                X
+            </button>
+          </div>
+          <p className="text-3xl font-bold text-slate-800">Agregar un nuevo modulo</p>
+          <form onSubmit={createModulo} action="" className="flex flex-col gap-2">
+            <label htmlFor="" className="text-slate-800">
+              Modulo
+            </label>
+            <input
+              type="text"
+              value={nombreModulo}
+              onChange={(e)=>setNombreModulo(e.target.value)}
+              className="p-1 rounded-xl text-slate-600 text-lg border border-indigo-500"
+            />
+            <button type="submit" className="p-1 bg-green-500 hover:scale-105 transition-all font-bold text-white">
+              Guardar titulo
+            </button>
+          </form>
+        </div>
+      </Modal>
       <Modal isOpen={addDocumentacion === 1 ? true : false} className={'w-full h-full flex justify-center items-center backdrop-blur-sm animate__animated  animate__fadeIn'}>
         <div className="w-96 h-auto p-2 flex flex-col gap-5 bg-white border-2 rounded-xl border-indigo-500">
           <div className="w'full flex flex'row justify-end">
@@ -431,6 +590,7 @@ export const Documentacion = () => {
           </form>
         </div>
       </Modal>
+      <ToastContainer/>
     </section>
   );
 };

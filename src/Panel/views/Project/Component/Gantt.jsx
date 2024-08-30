@@ -53,7 +53,7 @@ export const Gantt = () => {
           <p>Asignado: Bayron</p> */}
         </div>
       </div>
-      <div className=" md:max-w-[1470px] h-full bg-white  border-2 border-salte-300 flex flex-row overflow-hidden">
+      <div className=" md:max-w-[1470px] h-full bg-white   flex flex-row overflow-hidden">
         <div className="md:w-[19%] w-[40%] h-full text-[10px]  flex flex-col text-[#3c423f] ">
           {/* titulos de tareas  */}
           {tareas?.map(tarea => (
@@ -63,7 +63,7 @@ export const Gantt = () => {
           ))}
         </div>
         {/* filas 1 */}
-        <div className="md:w-full w-full  flex flex-col overflow-auto">
+        <div className="md:w-full w-full  flex flex-col overflow-x-auto">
         {tareas?.map(tarea => {
               const inicioGantt = ((tarea.dia_inicio * 40) - 40 )+ 'px';
               const duracionDias = (tarea.dia_fin - tarea.dia_inicio);
@@ -76,9 +76,9 @@ export const Gantt = () => {
                     marginLeft:inicioGantt,
                     width:duracionPx
                     }}
-                  onMouseMove={(e) => tooltip(e, tarea.id)}
-                  onMouseOut={(e) => visibletool(e)}
-                  onClick={()=>setModalTareas(!modalTareas)}
+                    onMouseMove={(e) => tooltip(e, tarea.id)}
+                    onMouseOut={(e) => visibletool(e)}
+                    onClick={()=>setModalTareas(!modalTareas)}
                     >
                     {/* foto de integrante */}
                     {/* <Tooltip img={urlBackend + foto} mensaje={'Usuario'}/> */}

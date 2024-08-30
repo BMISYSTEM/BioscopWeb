@@ -28,7 +28,7 @@ export const AccionesOs = () => {
   return (
     <div className="w-full md:h-20 border-b-2 flex md:flex-row flex-col items-center p-2 gap-4">
       {/* busqueda */}
-      <div className="md:w-[35%] w-full h-10 border-2 rounded-xl shadow-xl relative ">
+      <div className="md:w-[35%] w-full h-10  rounded-xl shadow-xl relative ">
         <div className="absolute w-[10%]  flex items-center justify-start p-2">
           <img src={lupa} alt="" title="Busqueda" className="w-6 h-6   " />
         </div>

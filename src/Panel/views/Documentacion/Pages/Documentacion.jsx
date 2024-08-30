@@ -27,6 +27,7 @@ export const Documentacion = () => {
   const [addDocumentacion, setAddDocumentacion] = useState(null);
   const [barra, setBarra] = useState(false);
   const [nombreModulo,setNombreModulo] = useState(null)
+  const [sistema,setSistema] = useState(null)
   /**
    * 1: editar
    * 2:eliminar
@@ -187,7 +188,7 @@ export const Documentacion = () => {
           try {
             const datos ={
               id_modulo:editModule,
-              sistema:1,
+              sistema:sistema,
               nombre:nombreModulo
             }
             const {data} = await clienteAxios.post('/api/updatemodulo',datos,{
@@ -204,7 +205,7 @@ export const Documentacion = () => {
         }else{
           try {
             const datos ={
-              sistema:1,
+              sistema:sistema,
               nombre:nombreModulo
             }
             const {data} = await clienteAxios.post('/api/createmodulo',datos,{
@@ -259,134 +260,213 @@ export const Documentacion = () => {
       cargaDocument()
     },[moduloSelect])
     const allModulos = modulos?.data
-    console.log(documentacion)
+    console.log(allModulos)
   return (
-    <section className="w-full h-full bg-gradient-to-r from-slate-900 to-sky-800   flex md:flex-row flex-col overflow-auto ">
+    // bg-gradient-to-r from-slate-900 to-sky-800 
+    <section className="w-full h-full bg-white  flex md:flex-row flex-col overflow-auto gap-2 md:gap-0 scroll-smooth ">
       {/* boton de expandir */}
       <button
-        className="w-full flex justify-center fixed md:hidden"
+        className="w-full flex justify-center md:fixed md:hidden bg-white"
         onClick={() => setBarra(!barra)}
       >
-        <svg
-          width=""
-          height=""
-          viewBox="0 0 18 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-10 h-10"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M0 1.25C0 0.835786 0.335786 0.5 0.75 0.5H17.25C17.6642 0.5 18 0.835786 18 1.25C18 1.66421 17.6642 2 17.25 2H0.75C0.335786 2 0 1.66421 0 1.25ZM0 5.75C0 5.33579 0.335786 5 0.75 5H17.25C17.6642 5 18 5.33579 18 5.75C18 6.16421 17.6642 6.5 17.25 6.5H0.75C0.335786 6.5 0 6.16421 0 5.75ZM0 10.25C0 9.83579 0.335786 9.5 0.75 9.5H17.25C17.6642 9.5 18 9.83579 18 10.25C18 10.6642 17.6642 11 17.25 11H0.75C0.335786 11 0 10.6642 0 10.25ZM0 14.75C0 14.3358 0.335786 14 0.75 14H17.25C17.6642 14 18 14.3358 18 14.75C18 15.1642 17.6642 15.5 17.25 15.5H0.75C0.335786 15.5 0 15.1642 0 14.75Z"
-            fill="url(#paint0_linear_1906_48)"
-          />
-          <defs>
-            <linearGradient
-              id="paint0_linear_1906_48"
-              x1="-6"
-              y1="9.5"
-              x2="23.5"
-              y2="9.5"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#0649E6" />
-              <stop offset="1" stop-color="#798192" />
-            </linearGradient>
-          </defs>
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25" />
+</svg>
+
       </button>
       {/* barra lateral */}
       <div
         className={`md:w-[20%] w-full ${
           barra
             ? " h-full  opacity-100"
-            : " opacity-0 h-[1px] md:h-full md:opacity-100"
-        } sticky top-0 m-0  flex flex-col gap-2  p-3 transition-all mt-10 md:mt-0 `}
+            : " opacity-0 h-[0px] md:h-full md:opacity-100"
+        } md:sticky md:top-0 m-0  flex flex-col gap-2  p-3 transition-all mt-2 md:mt-0 border-r`}
       >
-        {/* buscador */}
-        <button className="md:w-[16%] w-[90%] h-10 bg-white rounded-xl flex flex-row gap-2 items-center p-2 hover:scale-105 transition mb-5 fixed">
-          <img src={sheart} alt="" className="w-6 h-6" />
-          <p className="text-lg font-bold text-slate-300">Que buscas...</p>
-        </button>
         {/* opciones principales */}
-        <div className=" w-full h-full mt-20">
-          <div className="w-full flex flex-row justify-between items-center">
-            <p className="text-[16px] font-sans font-bold text-white">Siagri</p>
+        <div className=" w-full h-full mt-20 ">
+          {/* siagri */}
+          <div className="w-full flex flex-row justify-between items-center border p-1 bg-slate-200">
+            <p className="text-[16px] font-sans font-bold  ">Siagri</p>
             <button
-            onClick={()=>setAddDocumentacion(0)}
-            className="border-2 border-transparent font-sans font-bold text-white  rounded-full p-2 hover:scale-105  hover:text-green-500  transition-all">
+            onClick={()=>{
+              setSistema(1)
+              setAddDocumentacion(0)}}
+            className="border-2 border-transparent font-sans font-bold   rounded-full p-2 hover:scale-105  hover:text-green-500  transition-all">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
               </svg>
             </button>
           </div>
           {loadingModulos ? 
-              <p className="text-lg animate-bounce text-white">Cargando modulos...</p>
+              <p className="text-lg animate-bounce ">Cargando modulos...</p>
               :
               null
             }
           {/* opciones de pagina de siagri */}
-          <div className="w-full flex flex-col gap-3 p-2 px-10">
-            {allModulos?.map((modulo,index)=>(
-              <div key={index} className="w-full flex justify-between items-center">
-                <button  className="text-slate-100" onClick={()=>setmoduloSelect(modulo.id)}>{modulo.nombre}</button>
-                <div className="flex flex-row gap-1">
-                  <button onClick={()=>{
-                    setactionModule(1)
-                    setEditModulo(modulo.id)
-                    setNombreModulo(modulo.nombre)
-                    setAddDocumentacion(0)
-                    }} className="border-2 border-transparent font-sans font-bold text-white  rounded-full p-2 hover:scale-105  hover:text-green-500  transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                    </svg>
-                  </button>
-                  <button
-                   onClick={()=>deleteModulo(modulo.id)} 
-                    className="border-2 border-transparent font-sans font-bold text-white  rounded-full p-2 hover:scale-105  hover:text-red-500  transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-            ))}
+          <div className="w-full flex flex-col gap-3 p-2 px-5 border">
+            {allModulos?.map((modulo,index)=>{
+              if(modulo.sistema === 1 ){
+                  return (
+    
+                  <div key={index} className="w-full flex justify-between items-center border p-1 hover:border-l-4 hover:border-sky-700">
+                    <button  className="hover:text-sky-700 hover:border-b-2 border-sky-500" onClick={()=>setmoduloSelect(modulo.id)} >{modulo.nombre}</button>
+                    <div className="flex flex-row gap-1">
+                      <button onClick={()=>{
+                        setactionModule(1)
+                        setEditModulo(modulo.id)
+                        setNombreModulo(modulo.nombre)
+                        setAddDocumentacion(0)
+                        }} className="border-2 border-transparent font-sans font-bold  rounded-full p-2 hover:scale-105  hover:text-green-500  transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                      </button>
+                      <button
+                      onClick={()=>deleteModulo(modulo.id)} 
+                        className="border-2 border-transparent font-sans font-bold   rounded-full p-2 hover:scale-105  hover:text-red-500  transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+    
+                  )
+              }
+            })}
             
           </div>
-         
+         {/* Sicap */}
+         <div className="w-full flex flex-row justify-between items-center border p-1 bg-slate-200">
+            <p className="text-[16px] font-sans font-bold  ">Sicap</p>
+            <button
+            onClick={()=>{
+              setSistema(2)
+              setAddDocumentacion(0)}}
+            className="border-2 border-transparent font-sans font-bold   rounded-full p-2 hover:scale-105  hover:text-green-500  transition-all">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+            </button>
+          </div>
+          {loadingModulos ? 
+              <p className="text-lg animate-bounce ">Cargando modulos...</p>
+              :
+              null
+            }
+          {/* opciones de pagina de siagri */}
+          <div className="w-full flex flex-col gap-3 p-2 px-5 border">
+            {allModulos?.map((modulo,index)=>{
+              if(modulo.sistema === 2 ){
+                  return (
+    
+                  <div key={index} className="w-full flex justify-between items-center border p-1 hover:border-l-4 hover:border-sky-700">
+                    <button  className="hover:text-sky-700 hover:border-b-2 border-sky-500" onClick={()=>setmoduloSelect(modulo.id)} >{modulo.nombre}</button>
+                    <div className="flex flex-row gap-1">
+                      <button onClick={()=>{
+                        setactionModule(1)
+                        setEditModulo(modulo.id)
+                        setNombreModulo(modulo.nombre)
+                        setAddDocumentacion(0)
+                        }} className="border-2 border-transparent font-sans font-bold  rounded-full p-2 hover:scale-105  hover:text-green-500  transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                      </button>
+                      <button
+                      onClick={()=>deleteModulo(modulo.id)} 
+                        className="border-2 border-transparent font-sans font-bold   rounded-full p-2 hover:scale-105  hover:text-red-500  transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+    
+                  )
+              }
+            })}
+            
+          </div>
         </div>
       </div>
+      {/* idex de pagina  con relacionados pantallas mobile*/}
+      <div className="md:sticky md:hidden md:top-0 m-0  md:w-[20%] w-full h-full  text-start p-2 flex flex-col border-l ">
+        <h1 className="text-xl font-bold font-serif ">Index de documento</h1>
+        {documentacion.map((title,index)=>(
+          <a key={index} href={`#${title.id}`} className="text-sm text-sky-700 hover:border p-1">{title.title}</a>
+        ))}
+      </div>
       {/* main panel central */}
-      <main className="md:w-[60%] w-full h-full flex flex-col gap-3 p-2  text-slate-200 ">
+      <main className="md:w-[60%] w-full h-auto flex flex-col gap-3 p-2  ">
         {documentacion.map((document, index) => {
           switch (document.tipo) {
             case 1: //titulos
               return (
-                <p id={document.id} className="text-2xl font-bold text-slate-300">
-                  {document.title}
-                </p>
+                <section key={index} className="w-full flex flex-col gap-2 group">
+                  <div className="w-full flex flex-row gap-2 justify-end">
+                    <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                      </svg>
+                    </button>
+                    <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                      </svg>
+                    </button>
+                  </div>
+                  <p  id={document.id} className="text-2xl font-bold ">
+                    {document.title}
+                  </p>
+                </section>
               );
               break;
             case 2: //texto
               return (
-                <p id={document.id}  className="text-lg  text-slate-200 " style={{whiteSpace:'pre-line'}}>{document.text}</p>
+                <section key={index} className="w-full flex flex-col gap-2 group">
+                  <div className="w-full flex flex-row gap-2 justify-end">
+                    <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                      </svg>
+                    </button>
+                    <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                      </svg>
+                    </button>
+                  </div>
+                  <p  id={document.id}  className="text-lg  " style={{whiteSpace:'pre-line'}}>{document.text}</p>
+                </section>
               );
             case 3: // recuadro
               return (
-                <div id={document.id}  className="p-2 border-2 border-slate-200 text-slate-200 flex flex-col gap-2 rounded-sm">
-                  <p className="text-slate-400 text-2xl">{document.title}</p>
-                  <p className="text-lg  text-slate-200 ">{document.text}</p>
+                <div key={index} id={document.id}  className="p-2 border-2 border-slate-200  flex flex-col gap-2 rounded-sm group">
+                   <div className="w-full flex flex-row gap-2 justify-end">
+                    <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                      </svg>
+                    </button>
+                    <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                      </svg>
+                    </button>
+                  </div>
+                  <p className="text-2xl">{document.title}</p>
+                  <p className="text-lg   ">{document.text}</p>
                 </div>
               );
             break
             case 4: // imagen
               return (
-                <div id={document.id}  className="p-2  text-slate-200 flex flex-col gap-2 rounded-sm">
+                <div key={index} id={document.id}  className="p-2   flex flex-col gap-2 rounded-sm">
                   <img src={document.image} alt="" className="w-full h-96 object-contain" />
-                  <p className="text-xs  text-slate-200 text-center">{document.title}</p>
+                  <p className="text-xs   text-center">{document.title}</p>
                 </div>
               );
             break
@@ -464,13 +544,16 @@ export const Documentacion = () => {
         </div>
         
       </main>
-      {/* idex de pagina  con relacionados*/}
-      <div className="sticky top-0 m-0  md:w-[20%] w-full h-full  text-start p-2 flex flex-col">
-        <h1 className="text-xl font-bold font-serif text-slate-200">Index de documento</h1>
+      {/* idex de pagina  con relacionados pantallas grandes*/}
+      <div className="md:sticky hidden md:top-0 m-0  md:w-[20%] w-full h-full  text-start p-2 md:flex flex-col border-l">
+        <h1 className="text-xl font-bold font-serif ">Index de documento</h1>
         {documentacion.map((title,index)=>(
-          <a href={`#${title.id}`} className="text-sm text-white">{title.title}</a>
+          <a key={index} href={`#${title.id}`} className="text-sm text-sky-700">{title.title}</a>
         ))}
       </div>
+
+
+
       <Modal isOpen={addDocumentacion === 0 ? true : false} className={'w-full h-full flex justify-center items-center backdrop-blur-sm animate__animated  animate__fadeIn'}>
         <div className="w-96 h-auto p-2 flex flex-col gap-5 bg-white border-2 rounded-xl border-indigo-500">
           <div className="w'full flex flex'row justify-end">
@@ -478,7 +561,7 @@ export const Documentacion = () => {
                 X
             </button>
           </div>
-          <p className="text-3xl font-bold text-slate-800">Agregar un nuevo modulo</p>
+          <p className="text-3xl font-bold text-slate-800">{actionModule === 1 ? 'Editar nombre de modulo' : 'Agregar un nuevo modulo'}</p>
           <form onSubmit={createModulo} action="" className="flex flex-col gap-2">
             <label htmlFor="" className="text-slate-800">
               Modulo

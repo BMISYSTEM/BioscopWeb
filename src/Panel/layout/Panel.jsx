@@ -51,11 +51,11 @@ const Panel =  () => {
      * Informacion de los botones de navegacion
      */
     const {navar} = useOptionsNav()
-    console.log(permisos)
+
   return (
     <div className="w-full h-screen flex md:flex-row flex-col overflow-hidden">
-      {/* navegacion */}
-      <section className={`${barra ? 'md:w-[15rem]   h-full z-50 md:z-0 absolute md:relative w-full ' : 'md:w-[5rem] h-10 w-full  '} transition-all ease-in duration-300 md:h-screen  bg-white flex flex-col gap-2 p-2`}>
+      {/* navegacion desktop */}
+      <section className={`${barra ? 'md:w-[15rem]  h-full z-50 md:z-0 absolute md:relative w-full ' : 'md:w-[5rem] h-10 w-full  '} transition-all ease-in duration-300 md:h-screen  hidden md:flex flex-col gap-2 p-2`}>
         <div className="w-full h-auto flex md:items-end md:justify-end justify-center">
             <button onClick={()=>setbarra(!barra)} className="w-6 h-6 md:flex hidden ">
                 {barra ?  
@@ -89,7 +89,7 @@ const Panel =  () => {
                 return (
                   <button key={index}
                     onClick={()=>setselectOption(nav.id)}
-                    className={`w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOption === nav.id ? "  border-[0.1px] border-[#48b9ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
+                    className={`sticky mt-0 w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOption === nav.id ? "  border-[0.1px] border-[#48b9ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
                   >
                     <div className='flex flex-col gap-2'>
                       <div className='flex flex-row gap-2'>
@@ -147,15 +147,108 @@ const Panel =  () => {
           }
         </div>
       </section>
+        {/* aside mobile */}
+        <section className={`${barra ? 'md:w-[15rem]  h-full z-50 md:z-0 absolute md:relative w-full ' : 'md:w-[5rem] h-10 w-full  '} transition-all ease-in duration-300 md:h-screen md:hidden fixed md:static bg-white flex flex-col gap-4 p-2`}>
+        <div className="w-full h-auto flex md:items-end md:justify-end justify-center">
+            <button onClick={()=>setbarra(!barra)} className="w-6 h-6 md:flex hidden ">
+                {barra ?  
+                <img src={encoger} alt="expandir" className="w-6 h-6" />
+                :
+                <img src={expandir} alt="expandir" className="w-6 h-6" />
+                }
+            </button>
+            <button onClick={()=>setbarra(!barra)} className="md:hidden   ">
+              {barra ? 
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+              :
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+              </svg>
+              }
+              
+            </button>
+        </div>
+        <div className={`w-20 ${barra? 'h-20 md:flex hidden' : 'md:h-[5rem] hidden  '} border-2 rounded-full md:transition-all  shadow-sm flex flex-col gap-2 items-center justify-center overflow-hidden`}>
+            <img src={urlBackend + foto} alt=" foto de usuario logueado" className={`object-contain w-full ${barra ? 'h-full' : 'h-5'} `} />
+            {/* <p className={`${barra? 'flex' : 'hidden'}`}>Nombre de usuario</p> */}
+        </div>
+        {/* si la barra es true se coloca en formato flex sino desaparece */}
+        <div className={` ${barra ? " flex " : " hidden md:flex"} flex-col gap-2`}>
+          {navar?.map((nav,index) => {
+            // Validacion de permisos de forma dinamica 
+            if(permisos?.permisos[0][nav?.id]){
+              if (nav?.children.length > 0 ) {
+                return (
+                  <button key={index}
+                    onClick={()=>setselectOption(nav.id)}
+                    className={`sticky mt-0 w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOption === nav.id ? "  border-[0.1px] border-[#48b9ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
+                  >
+                    <div className='flex flex-col gap-2'>
+                      <div className='flex flex-row gap-2'>
+                        <Tooltip img={nav.icono} mensaje={nav.title} className='w-6 h-6' posicionMesaje='r' visible={`${barra ? 'true' : 'false'} `}/>
+                        {/* si barra es true muestra el titulo  */}
+                        {barra ?  
+                            <span className="text-xl font-bold  ">{nav.title}</span>
+                        : 
+                            ''
+                        }
+                      </div>
+                      {/* si selectOption es igual al id muestra las opciones de submenu */}
+                      {selectOption === nav.id ?
+                        nav.children.map((children,index) => (
+                          <Link key={index}
+                            onClick={()=>setselectOptionSubMenu(children.id)}
+                            to={children.to}
+                            className={`w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOptionSubMenu === children.id ? "  bg-[#edf8ff] border border-[#4870ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
+                          >
+                            <Tooltip img={children.icono} mensaje={children.title} className='w-6 h-6' posicionMesaje='r' visible={`${barra ? 'true' : 'false'} `}/>
+                            {barra ?  
+                              <span className="text-xl font-bold  ">{children.title}</span>
+                            : 
+                              ''
+                            }
+                          </Link>
+                        )) 
+                      :
+                        ''
+                      }
+  
+                    </div>
+                  </button>
+                )
+              }
+  
+              return (
+                <Link key={index}
+                  onClick={()=>setselectOption(nav.id)}
+                  to={nav.to}
+                  className={`w-full p-2 flex flex-row rounded-sm hover:border-l-4 ${!barra ? ' justify-center ': ' ' } ${selectOption === nav.id ? "  bg-[#edf8ff] border border-[#48b9ff] border-l-4  " : "  text-[#0d439b] hover:bg-[#edf8ff] hover:border-[#48b9ff]"} gap-2 items-center transition   `}
+                >
+                  <Tooltip img={nav.icono} mensaje={nav.title} className='w-6 h-6' posicionMesaje='r' visible={`${barra ? 'true' : 'false'} `}/>
+                  {/* <img src={nav.icono} alt={nav.title} className="w-8 h-8" /> */}
+                  {barra ?  
+                      <span className="text-xl font-bold  ">{nav.title}</span>
+                  : 
+                      ''
+                  }
+                </Link>
+              )
+            }
+          }
+          )
+          }
+        </div>
+        </section>
       {/* contenido se renderiza al momento de dar click en algunos de las opciones del aside*/} 
-      <main className="w-full h-screen bg-slate-200 flex flex-col p-1 ">
+      <main className="w-full h-screen bg-slate-200 flex flex-col p-1 mt-10 md:mt-0">
         {/* cabecera con opciones rapidas*/}
-        <header className="w-full h-10 bg-white rounded-xl shadow-xl flex flex-row gap-4   p-2">
-          <div className='w-full'>
+        <header className="w-full h-10 bg-white rounded-xl shadow-xl fixed md:static flex flex-row gap-4 justify-end   p-2">
+          <div className=''>
             <p>Usuario: <span className='text-lg font-bold text-slate-400'>{informacionUsuario.name } {informacionUsuario.apellido}</span></p> 
-            
           </div>
-          <div className="w-full flex flex-row gap-4 ">
+          <div className=" flex flex-row gap-4 ">
             <button className="w-6 h-6 hover:scale-110 transition">
               <img src={alarma} alt="notificaciones" className="w-6 h-6" title="Notificaciones"/>
             </button>
@@ -167,7 +260,7 @@ const Panel =  () => {
             </button>
           </div>
         </header>
-        <section className="w-full h-[95%] p-2 flex flex-col">
+        <section className="w-full h-[95%] p-2 flex flex-col mt-20 md:mt-0">
           <Outlet/>            
         </section>
       </main>

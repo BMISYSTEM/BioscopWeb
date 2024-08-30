@@ -94,6 +94,12 @@ export const useOptionsNav = () => {
                 icono: organigrama,  
             },
             {
+              id:8.2,
+              title: "Estados",
+              to: "/panel/configuracion/estados",
+              icono: organigrama,  
+            },
+            {
                 id:8.2,
                 title: "Temas",
                 to: "/panel/configuracion/temas",

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useState} from 'react';
 import { Link, Outlet } from "react-router-dom";
 import { useLogin } from "../../Home/Hooks/useLogin";
 import "../home.css"
@@ -6,7 +6,6 @@ import 'animate.css'
 /**
  * Imagenes
  */
-import usuario from "../assets/usuario.svg";
 import expandir from "../assets/expandir.svg"
 import encoger from "../assets/encoger.svg"
 
@@ -36,7 +35,6 @@ const Panel =  () => {
     const {isLoading,permisos} = usePermisosNav()
     const [barra,setbarra] = useState(false)
     const [selectOption,setselectOption] = useState(1)
-    const [infouser,setInfouser] = useState();
     const [selectOptionSubMenu,setselectOptionSubMenu] = useState(1)
 
     if(isLoading){
@@ -53,7 +51,7 @@ const Panel =  () => {
     const {navar} = useOptionsNav()
 
   return (
-    <div className="w-full h-screen flex md:flex-row flex-col overflow-hidden">
+    <div className="w-full h-screen flex md:flex-row flex-col overflow-hidden ">
       {/* navegacion desktop */}
       <section className={`${barra ? 'md:w-[15rem]  h-full z-50 md:z-0 absolute md:relative w-full ' : 'md:w-[5rem] h-10 w-full  '} transition-all ease-in duration-300 md:h-screen  hidden md:flex flex-col gap-2 p-2`}>
         <div className="w-full h-auto flex md:items-end md:justify-end justify-center">
@@ -244,7 +242,7 @@ const Panel =  () => {
       {/* contenido se renderiza al momento de dar click en algunos de las opciones del aside*/} 
       <main className="w-full h-screen bg-slate-200 flex flex-col p-1 mt-10 md:mt-0">
         {/* cabecera con opciones rapidas*/}
-        <header className="w-full h-10 bg-white rounded-xl shadow-xl fixed md:static flex flex-row gap-4 justify-end   p-2">
+        <header className="w-full h-10 bg-white rounded-xl shadow-xl fixed md:static flex flex-row gap-4 justify-center   p-2">
           <div className=''>
             <p>Usuario: <span className='text-lg font-bold text-slate-400'>{informacionUsuario.name } {informacionUsuario.apellido}</span></p> 
           </div>
@@ -260,7 +258,7 @@ const Panel =  () => {
             </button>
           </div>
         </header>
-        <section className="w-full h-[95%] p-2 flex flex-col mt-20 md:mt-0">
+        <section className="w-[100%] h-[95%] p-2 flex flex-col mt-20 md:mt-0 overflow-hidden  ">
           <Outlet/>            
         </section>
       </main>

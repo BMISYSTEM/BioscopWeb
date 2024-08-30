@@ -9,6 +9,7 @@ import  Os  from "./Panel/views/Os/Pages/Os";
 import { Documentacion } from "./Panel/views/Documentacion/Pages/Documentacion";
 import { Project } from "./Panel/views/Project/views/Project";
 import { Usuarios } from "./Panel/views/Configuracion/Usuarios/Views/Usuarios";
+import EstadosLayout from "./Panel/views/Configuracion/Estados/view/EstadosLayout";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -50,7 +51,10 @@ const router = createBrowserRouter([
                 path:"/panel/configuracion/usuarios",
                 element: <Usuarios/>
             },
-          
+            {
+                path:"/panel/configuracion/estados",
+                element: <EstadosLayout/>
+            },
         ]
     },
     {

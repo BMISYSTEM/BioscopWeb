@@ -12,7 +12,7 @@ export const Project = () => {
 
   return (
     <GanttProvider>
-      <section className="w-full h-full bg-white flex flex-col">
+      <section className="w-[100%] h-full bg-white flex flex-col overflow-hidden">
         <OpcionesProject/>
         {/* visual */}
         <MainProject/>

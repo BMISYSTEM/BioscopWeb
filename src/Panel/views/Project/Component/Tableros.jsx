@@ -26,19 +26,6 @@ export const Tableros = () => {
        setmodalNewApunte(true)
        setosSelect(e.dataTransfer.getData("text/plain"))
        seEstadoSelect(e.target.id)
-    //    /**
-    //     * Captura el elemento que se movio
-    //     */
-    //    const idElementoArrastrado = e.dataTransfer.getData("text/plain");
-    //     /**
-    //     * Captura el id del elemento
-    //     */
-    //    const elementoArrastrado = document.getElementById(idElementoArrastrado);
-    //      /**
-    //     * Agrgo el elemento que se movio
-    //     */
-    //    document.getElementById(e.target.id).appendChild(elementoArrastrado);
-
     }
     /**
      * Para hacer un cambio de estados e hace por medio del apuntamiento, se puede cambiar directamente pero se perderia el seguimiento
@@ -60,7 +47,7 @@ export const Tableros = () => {
             fecha: `${year}-${mes}-${dia}`,
             hora: `${horas}:${minutos}:${segundos}`
         }
-
+        setLoading(true)
         await toast.promise(
             clienteAxios.post('/api/newapuntamiento',datos,{
                 headers:{
@@ -74,6 +61,7 @@ export const Tableros = () => {
                 error: 'Se genero un error comuniquese con soporte'
             }
         )
+        setLoading(false)
         await consultarOs()
         setLoading(false)
         setcomentario('')
@@ -81,6 +69,7 @@ export const Tableros = () => {
         
     }
     const consultarEstados = async() =>{
+        setLoading(true)
         try {
             const {data} = await clienteAxios.get('/api/indexestados',{
                 headers:{
@@ -91,9 +80,11 @@ export const Tableros = () => {
         } catch (error) {
             console.log(error)
         }
+        setLoading(false)
     }
 
     const consultarOs = async() =>{
+        setLoading(true)
         try {
             const {data} = await clienteAxios.get('/api/indexos',{
                 headers:{
@@ -104,6 +95,7 @@ export const Tableros = () => {
         } catch (error) {
             console.log(error)
         }
+        setLoading(false)
     }
 
     useEffect(()=>{
@@ -117,21 +109,62 @@ export const Tableros = () => {
     const estadoNuevo = estados?.filter((estado)=>estado.id === Number(estadoSelect))
   return (
     <section className='w-full h-full flex flex-wrap gap-2  overflow-auto justify-center'>
-        {/* projectos */}
-        {/* <div className='w-2/3 h-full flex flex-col gap-3 p-2' >
-            <h1 className='text-black font-bold text-xl'>Tareas</h1>
-            <p className='text-black border p-2 rounded-sm shadow-sm text-sm' draggable={true} onDragStart={(e)=>arrastrando(e)} id='1'>Tarea 1 </p>
-            <p className='text-black border p-2 rounded-sm shadow-sm text-sm' draggable={true} onDragStart={(e)=>arrastrando(e)} id='2'>Tarea 2 </p>
-            <p className='text-black border p-2 rounded-sm shadow-sm text-sm' draggable={true} onDragStart={(e)=>arrastrando(e)} id='3'>Tarea 3 </p>
-            <p className='text-black border p-2 rounded-sm shadow-sm text-sm' draggable={true} onDragStart={(e)=>arrastrando(e)} id='4'>Tarea 4 </p>
-            <p className='text-black border p-2 rounded-sm shadow-sm text-sm' draggable={true} onDragStart={(e)=>arrastrando(e)} id='5'>Tarea 5 </p>
-            <p className='text-black border p-2 rounded-sm shadow-sm text-sm' draggable={true} onDragStart={(e)=>arrastrando(e)} id='6'>Tarea 6 </p>
-            <p className='text-black border p-2 rounded-sm shadow-sm text-sm' draggable={true} onDragStart={(e)=>arrastrando(e)} id='7'>Tarea 7 </p>
-        </div> */}
-        {/* estados  */}
-        {estados?.map((estado,index)=>(
+        {loading ? 
+        <>
+            <div  className='w-64    p-2 h-auto flex flex-col gap-2 border border-slate-300'  onDrop={(e)=>soltar(e)} onDragOver={(e)=>gestionSoltar(e)}>
+                <div className='w-full h-10 animate-pulse bg-slate-500 font-bold  text-center rounded-sm flex flex-row gap-2 items-center px-3 p-2' style={{
+                   
+                }}>
+                    <div className='w-2 h-4 animate-pulse rounded-full bg-slate-700 '>
+                    </div>
+                    <div className='w-full h-10 '>
+                    </div>
+                </div>
 
-            <div key={index} className='w-64 bg-white  p-2 h-auto flex flex-col gap-2 border' id={estado.id} onDrop={(e)=>soltar(e)} onDragOver={(e)=>gestionSoltar(e)}>
+                <div  className=' w-ful h-10 bg-slate-400 animate-pulse'>
+                    <p className='text-black border p-2 rounded-sm shadow-sm text-sm' draggable={true} onDragStart={(e)=>arrastrando(e)} >
+                        
+                    </p>
+                </div>                
+        
+            </div>
+            <div  className='w-64    p-2 h-auto flex flex-col gap-2 border border-slate-300'  onDrop={(e)=>soltar(e)} onDragOver={(e)=>gestionSoltar(e)}>
+                <div className='w-full h-10 animate-pulse bg-slate-500 font-bold  text-center rounded-sm flex flex-row gap-2 items-center px-3 p-2' style={{
+                   
+                }}>
+                    <div className='w-2 h-4 animate-pulse rounded-full bg-slate-700 '>
+                    </div>
+                    <div className='w-full h-10 '>
+                    </div>
+                </div>
+
+                <div  className=' w-ful h-10 bg-slate-400 animate-pulse'>
+                    <p className='text-black border p-2 rounded-sm shadow-sm text-sm' draggable={true} onDragStart={(e)=>arrastrando(e)} >
+                        
+                    </p>
+                </div>                
+        
+            </div>
+            <div  className='w-64    p-2 h-auto flex flex-col gap-2 border border-slate-300'  onDrop={(e)=>soltar(e)} onDragOver={(e)=>gestionSoltar(e)}>
+                <div className='w-full h-10 animate-pulse bg-slate-500 font-bold  text-center rounded-sm flex flex-row gap-2 items-center px-3 p-2' style={{
+                   
+                }}>
+                    <div className='w-2 h-4 animate-pulse rounded-full bg-slate-700 '>
+                    </div>
+                    <div className='w-full h-10 '>
+                    </div>
+                </div>
+                <div  className=' w-ful h-10 bg-slate-400 animate-pulse'>
+                    <p className='text-black border p-2 rounded-sm shadow-sm text-sm' draggable={true} onDragStart={(e)=>arrastrando(e)} >
+                    </p>
+                </div>                
+            </div>
+        
+        </>
+        : 
+
+        estados?.map((estado,index)=>(
+            <div key={index} className='w-64 bg-white  p-2 h-auto flex flex-col gap-2 border border-slate-300' id={estado.id} onDrop={(e)=>soltar(e)} onDragOver={(e)=>gestionSoltar(e)}>
                 <div className='w-full  text-white font-bold  text-center rounded-sm flex flex-row gap-2 items-center px-3 p-2' style={{
                     backgroundColor:estado.color,
                 }}>
@@ -154,7 +187,9 @@ export const Tableros = () => {
                 )}
             </div>
         )
-        )}
+        )
+
+        }
         <Modal isOpen={modalNewApunte} className={'w-full h-full backdrop-blur-sm flex justify-center items-center p-5'}>
             <section className='animate__animated  animate__fadeInDown w-96 h-auto bg-white border border-indigo-500 rounded-sm shadow-lg p-5 flex flex-col gap-5'>
                 <div className='w-full flex flex-row items-end justify-end'>

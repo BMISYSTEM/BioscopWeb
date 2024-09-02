@@ -70,13 +70,9 @@ export const RowNota = ({text,data,id,completado}) => {
           <Tooltip img={editar} mensaje={'Editar'} key={2}/>
         </button>
         {/* confirmar la nota y gerenar apuntamiento si viene 1 es por que ya se marco completado*/}
-        {completado ?
-          ''        
-        : 
-          <button className="flex flex-row gap-2 hover:scale-110" onClick={()=>handleClickOkNota(id)}>
-            <Tooltip img={completo} mensaje={'Realizado'} key={3}/>
-          </button>
-        }
+        <button className="flex flex-row gap-2 hover:scale-110" onClick={()=>handleClickOkNota(id)}>
+          <Tooltip img={completo} mensaje={'Realizado'} key={3}/>
+        </button>
       </div>
       </button>
       <ToastContainer/>

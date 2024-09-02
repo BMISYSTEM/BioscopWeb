@@ -260,7 +260,6 @@ export const Documentacion = () => {
       cargaDocument()
     },[moduloSelect])
     const allModulos = modulos?.data
-    console.log(allModulos)
   return (
     // bg-gradient-to-r from-slate-900 to-sky-800 
     <section className="w-full h-full bg-white  flex md:flex-row flex-col overflow-auto gap-2 md:gap-0 scroll-smooth ">
@@ -283,7 +282,7 @@ export const Documentacion = () => {
         } md:sticky md:top-0 m-0  flex flex-col gap-2  p-3 transition-all mt-2 md:mt-0 border-r`}
       >
         {/* opciones principales */}
-        <div className=" w-full h-full mt-20 ">
+        <div className=" w-full h-full mt-20 overflow-auto ">
           {/* siagri */}
           <div className="w-full flex flex-row justify-between items-center border p-1 bg-slate-200">
             <p className="text-[16px] font-sans font-bold  ">Siagri</p>

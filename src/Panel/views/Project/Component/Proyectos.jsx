@@ -9,7 +9,6 @@ import { GanttContext } from '../context/GanttContext';
 import { Modales } from './Modales';
 export const Proyectos = () => {
     const {newProject,setNewProject} = useContext(GanttContext);
-    console.log(newProject)
     // agregar a la clase hidden al elemento seleccionado
     const hiddenTr = (id) =>{
         /**
@@ -34,14 +33,6 @@ export const Proyectos = () => {
                 Nuevo proyecto
             </button>
         </div>
-        {/* <section className='w-full h-full  grid grid-cols-3 gap-2 p-2'>
-            <div className='w-96 h-40 bg-white rounded-xl shadow-xl border hover:scale-105 transition-all p-2 flex flex-col'>
-                <p className='text-lg font-bold font-serif text-slate-600'>Implementacion Manuelita</p>
-                <p className='text-sm  text-slate-600'>Porcentaje actual: <span className='text-xl font-bold'>25%</span></p>
-                <p className='text-sm  text-slate-600'>Horas de proyecto: <span className='text-xl font-bold'>2000 h</span></p>
-                <p className='text-sm  text-slate-600'>Horas de consumidas: <span className='text-xl font-bold'>1000 h</span></p>
-            </div>
-        </section> */}
         <section className='w-full h-full '>
             <table className='w-full border-2'>
                 {/* titulo del proyecto */}

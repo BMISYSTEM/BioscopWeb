@@ -6,7 +6,6 @@ import { NewProjectModal } from '../Modales/NewProjectModal';
 
 export const Modales = () => {
     const {modalTareas,newProject} = useContext(GanttContext);
-    console.log(newProject)
 
   return (
     <>
